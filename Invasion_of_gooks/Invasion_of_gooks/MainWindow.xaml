@@ -1,0 +1,14 @@
+﻿<Window x:Class="Invasion_of_gooks.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Invasion_of_gooks"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="Start" Margin="325,20,325,350">Start</Button>
+        <Button x:Name="Settings" Margin="20,370,742,20"/>
+        <Button x:Name="Exit" Margin="742,370,20,20"/>
+    </Grid>
+</Window>
