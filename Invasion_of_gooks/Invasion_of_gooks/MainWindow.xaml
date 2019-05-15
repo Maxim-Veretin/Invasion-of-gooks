@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Invasion_of_gooks"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="Start" Margin="325,20,325,350">Start</Button>
-        <Button x:Name="Settings" Margin="20,370,742,20"/>
-        <Button x:Name="Exit" Margin="742,370,20,20"/>
-    </Grid>
+        Title="Invasion of gooks" Height="450" Width="800">
+    <Canvas>
+        <Label x:Name="stopwatch" Content="0 : 0 : 0" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="60" Height="30" Background="#3F0046FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button x:Name="Start" Height="50" Width="140" Click="Start_Click" VerticalAlignment="Top" Canvas.Left="330" Canvas.Top="10" >Start</Button>
+        <Button x:Name="Settings" Height="30" Width="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Canvas.Left="10" Canvas.Top="380"/>
+        <Button x:Name="Exit" Height="30" Width="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Canvas.Left="752" Canvas.Top="380"/>
+    </Canvas>
 </Window>
