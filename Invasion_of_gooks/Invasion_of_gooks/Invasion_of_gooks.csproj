@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{021122B3-24F3-45D1-B470-51C225099249}</ProjectGuid>
+    <ProjectGuid>{255D44B9-DF43-4771-BD46-AF2DCEA6FE4A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Invasion_of_gooks</RootNamespace>
     <AssemblyName>Invasion_of_gooks</AssemblyName>
@@ -93,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="exit_image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
