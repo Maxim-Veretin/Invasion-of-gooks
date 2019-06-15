@@ -15,18 +15,24 @@ using System.Windows.Shapes;
 
 namespace Invasion_of_gooks
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         System.Windows.Threading.DispatcherTimer Timer;
         DateTime date = new DateTime();
 
-        //координаты вертолёта 
+        //создание объекта прямоугольник
+        public Rectangle helicopter = new Rectangle();
+
+        //hp вертолёта
+        public int hp_helicopter = 3;
+
+        //координаты вертолёта
         public int x = 633;
         public int y = 500;
-        public Polygon helicopter = new Polygon();
+
+        //даллары, мани, деньги, кэш
+        public int dollars = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,59 +40,34 @@ namespace Invasion_of_gooks
             //таймер
             Timer = new System.Windows.Threading.DispatcherTimer();
             Timer.Tick += new EventHandler(DispatcherTimer_Tick);
-            Timer.Interval = new TimeSpan(0, 0, 1);
-
-
-            //создание объекта вертолёта
-
-
-            //установка цвета обводки, цвета заливки и толщины обводки
-            helicopter.Stroke = Brushes.Black;
-            helicopter.Fill = Brushes.Green;
-            helicopter.StrokeThickness = 2;
-            //позиционирование объекта
-            helicopter.HorizontalAlignment = HorizontalAlignment.Left;
-            helicopter.VerticalAlignment = VerticalAlignment.Center;
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 1);
             
-            //создание точек многоугольника
-            Point Point1 = new Point(x, y - 50);
-            Point Point2 = new Point(x + 50, y);
-            Point Point3 = new Point(x + 50, y + 50);
-            Point Point4 = new Point(x - 50, y + 50);
-            Point Point5 = new Point(x - 50, y);
-            //создание и заполнение коллекции точек
-            PointCollection helicopterCollection = new PointCollection
-            {
-                Point1,
-                Point2,
-                Point3,
-                Point4,
-                Point5
-            };
-            //установка коллекции точек в объект многоугольник
-            helicopter.Points = helicopterCollection;
-            //добавление многоугольника в сцену
-            can.Children.Add(helicopter);
+            //отрисовываем вертолётик
+            Add_Helicopter();
+
+            //делаем его невидимым
+            helicopter.Visibility = Visibility.Collapsed;
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            //запуск отсчёта
-            Timer.Start();
-
             //делаем элементы меню неактивными
-            Settings.IsEnabled = false;
             Start.IsEnabled = false;
             Exit.IsEnabled = false;
             upgrades.IsEnabled = false;
             achievements.IsEnabled = false;
 
             //делаем элементы меню невидимыми
-            Settings.Visibility = Visibility.Collapsed;
             Start.Visibility = Visibility.Collapsed;
             Exit.Visibility = Visibility.Collapsed;
             upgrades.Visibility = Visibility.Collapsed;
             achievements.Visibility = Visibility.Collapsed;
+
+            //делаем вертолётик видимым
+            helicopter.Visibility = Visibility.Visible;
+
+            //запускаем таймер
+            Timer.Start();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -103,40 +84,32 @@ namespace Invasion_of_gooks
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             date = date.AddSeconds(1);
-            stopwatch.Content = date.Hour.ToString() + " : " + date.Minute.ToString() + " : " + date.Second.ToString();
+            stopwatch.Content = date.Hour.ToString() + " : " + date.Minute.ToString() + " : " + date.Second.ToString() + date.Millisecond.ToString();
+
             can.Children.Remove(helicopter);
-            //установка цвета обводки, цвета заливки и толщины обводки
+
+            Add_Helicopter();
+        }
+
+        private void Add_Helicopter()
+        {
+            //установка цвета линии обводки и цвета заливки при помощи коллекции кистей
             helicopter.Stroke = Brushes.Black;
-            helicopter.Fill = Brushes.Green;
-            helicopter.StrokeThickness = 2;
-            //позиционирование объекта
+            helicopter.Fill = Brushes.SkyBlue;
+
+            //параметры выравнивания
             helicopter.HorizontalAlignment = HorizontalAlignment.Left;
             helicopter.VerticalAlignment = VerticalAlignment.Center;
 
-            //создание точек многоугольника
-            Point Point1 = new Point(x, y - 50);
-            Point Point2 = new Point(x + 50, y);
-            Point Point3 = new Point(x + 50, y + 50);
-            Point Point4 = new Point(x - 50, y + 50);
-            Point Point5 = new Point(x - 50, y);
-            //создание и заполнение коллекции точек
-            PointCollection helicopterCollection = new PointCollection
-            {
-                Point1,
-                Point2,
-                Point3,
-                Point4,
-                Point5
-            };
-            //установка коллекции точек в объект многоугольник
-            helicopter.Points = helicopterCollection;
-            //добавление многоугольника в сцену
+            //размеры прямоугольника
+            helicopter.Height = 100;
+            helicopter.Width = 100;
+            helicopter.Margin = new Thickness(x, y, 0, 0);
+
+            //добавление объекта в сцену
             can.Children.Add(helicopter);
-
-
-
-
         }
+
         private void Key_Down(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -193,4 +166,4 @@ namespace Invasion_of_gooks
             }
         }
     }
-}//доброе утро я только что проснулся
+}
