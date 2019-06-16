@@ -1,0 +1,25 @@
+﻿<Window x:Class="Invasion_of_gooks.PauseMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Invasion_of_gooks"
+        mc:Ignorable="d"
+        Title="PauseMenu" Height="400" Width="400">
+    <Grid>
+        <Image Source="C:\Users\Администратор\Desktop\Invasion_of_gooks_prototype\Invasion_of_gooks\images\MainWindow.jpg" Stretch="Fill" Height="400" Width="400" Margin="0, 0, 0, 0"/>
+        <Button x:Name="Exit" Content="Выйти из игры" HorizontalAlignment="Left" Margin="135,185,0,0" VerticalAlignment="Top" Width="130" Height="40" Click="Exit_Click"/>
+        <!--<Button x:Name="Exit_To_Main_Window" Content="В главное меню" HorizontalAlignment="Left" Margin="135,155,0,0" VerticalAlignment="Top" Width="130" Height="40" Click="Exit_To_Main_Window_Click"/>-->
+
+        <Slider HorizontalAlignment="Left" Margin="300,280,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.5,0.5">
+            <Slider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Slider.RenderTransform>
+        </Slider>
+    </Grid>
+</Window>
