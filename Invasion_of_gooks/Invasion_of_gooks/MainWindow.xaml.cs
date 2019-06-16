@@ -23,6 +23,7 @@ namespace Invasion_of_gooks
         System.Windows.Threading.DispatcherTimer Timer;
         DateTime date = new DateTime();
 
+        public Polygon helicopter = new Polygon();
         public MainWindow()
         {
             InitializeComponent();
@@ -34,17 +35,19 @@ namespace Invasion_of_gooks
 
             Point helicoptercenter = new Point(683, 500);
             //создание объекта вертолёта
-            Polygon helicopter = new Polygon
-            {
-                //установка цвета обводки, цвета заливки и толщины обводки
-                Stroke = Brushes.Black,
-                Fill = Brushes.Green,
-                StrokeThickness = 2,
-                //позиционирование объекта
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Center
-            };
+
+
+            //установка цвета обводки, цвета заливки и толщины обводки
+
+            helicopter.Stroke = Brushes.Black;
+            helicopter.Fill = Brushes.Green;
+            helicopter.StrokeThickness = 2;
+            //позиционирование объекта
+            helicopter.HorizontalAlignment = HorizontalAlignment.Left;
+            helicopter.VerticalAlignment = VerticalAlignment.Center;
+            
             //создание точек многоугольника
+
             Point Point1 = new Point(helicoptercenter.X, helicoptercenter.Y - 50);
             Point Point2 = new Point(helicoptercenter.X + 50, helicoptercenter.Y);
             Point Point3 = new Point(helicoptercenter.X + 50, helicoptercenter.Y + 50);
@@ -63,12 +66,12 @@ namespace Invasion_of_gooks
             helicopter.Points = helicopterCollection;
             //добавление многоугольника в сцену
             can.Children.Add(helicopter);
+            helicopter.Visibility = Visibility.Collapsed;
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            //запуск отсчёта
-            Timer.Start();
+            
 
             //делаем элементы меню неактивными
             Start.IsEnabled = false;
@@ -81,6 +84,9 @@ namespace Invasion_of_gooks
             Exit.Visibility = Visibility.Collapsed;
             upgrades.Visibility = Visibility.Collapsed;
             achievements.Visibility = Visibility.Collapsed;
+            //запуск отсчёта
+            helicopter.Visibility = Visibility.Visible;
+            Timer.Start();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
