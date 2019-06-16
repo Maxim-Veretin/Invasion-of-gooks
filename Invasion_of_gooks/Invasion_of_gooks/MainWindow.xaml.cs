@@ -48,7 +48,7 @@ namespace Invasion_of_gooks
             
             //создание точек многоугольника
 
-            Point Point1 = new Point(helicoptercenter.X, helicoptercenter.Y - 50);
+            Point Point1 = new Point(helicoptercenter.X, helicoptercenter.Y - 50);//mi vse umrem
             Point Point2 = new Point(helicoptercenter.X + 50, helicoptercenter.Y);
             Point Point3 = new Point(helicoptercenter.X + 50, helicoptercenter.Y + 50);
             Point Point4 = new Point(helicoptercenter.X - 50, helicoptercenter.Y + 50);
