@@ -71,15 +71,13 @@ namespace Invasion_of_gooks
             Timer.Start();
 
             //делаем элементы меню неактивными
-            Settings.IsEnabled = false;
             Start.IsEnabled = false;
             Exit.IsEnabled = false;
             upgrades.IsEnabled = false;
             achievements.IsEnabled = false;
 
             //делаем элементы меню невидимыми
-            Settings.Visibility = Visibility.Collapsed;
-            Start.Visibility = Visibility.Collapsed;
+            Start.Visibility = Visibility.Collapsed;// функция сеттинг еще
             Exit.Visibility = Visibility.Collapsed;
             upgrades.Visibility = Visibility.Collapsed;
             achievements.Visibility = Visibility.Collapsed;
@@ -91,11 +89,7 @@ namespace Invasion_of_gooks
             Environment.Exit(0);
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+       
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             date = date.AddSeconds(1);
