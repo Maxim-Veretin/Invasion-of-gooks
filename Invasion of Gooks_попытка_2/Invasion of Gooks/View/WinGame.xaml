@@ -1,0 +1,13 @@
+﻿<Window x:Class="Invasion_of_Gooks.View.WinGame"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Invasion_of_Gooks.View"
+        mc:Ignorable="d"
+        Title="Win" Height="400" Width="400">
+    <Grid>
+        <Image Source="/Invasion of Gooks;component/Resources/pobeda.png" Stretch="Fill" Margin="0, 0, 0, 0"/>
+        <Button Content="ПАБИДИЛ" Click="Button_Click" Width="80" Height="30" Margin="15,0,0,15" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+    </Grid>
+</Window>

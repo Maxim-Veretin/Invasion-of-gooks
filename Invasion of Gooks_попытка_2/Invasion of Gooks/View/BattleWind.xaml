@@ -1,0 +1,100 @@
+﻿<Window x:Class="Invasion_of_Gooks.View.BattleWind"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:main="clr-namespace:Invasion_of_Gooks"
+        xmlns:local="clr-namespace:Invasion_of_Gooks.View"
+        xmlns:viewmodel="clr-namespace:Invasion_of_Gooks.ViewModel"
+        xmlns:model="clr-namespace:Invasion_of_Gooks.Model"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        mc:Ignorable="d" 
+        Title="BattleWind" Height="450" Width="800" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+    <Window.DataContext>
+        <viewmodel:ViewModelClass/>
+    </Window.DataContext>
+    <Viewbox>
+        <Grid>
+            <!--<MediaElement Source="/Invasion of Gooks;component/Resources/Sound/rideOfTheValkyries.wav"></MediaElement>-->
+            <!--<TextBlock Panel.ZIndex="10" Text="{Binding Gamer.Health}"/>-->
+            <!--<ProgressBar Panel.ZIndex="10" Height="30" Width="200" />-->
+            <Image gif:ImageBehavior.AnimatedSource="/Invasion of Gooks;component/Resources/finalfon1.gif" />
+            <Label Content="HP" Height="30" Width="30"  Margin="5,701,1254,40" Background="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="SF Movie Poster" FontSize="20"/>
+            <ProgressBar Maximum="{Binding Gamer.FullHealth}" Minimum="0" Background="Red" Foreground="DarkBlue" Value="{Binding Gamer.Health}" Margin="85,701,1024,40"/>
+            <ItemsControl ItemsSource="{Binding UFOitems,Delay=50}" Background="{x:Null}" FontSize="20">
+                <ItemsControl.Resources>
+                    <DataTemplate DataType="{x:Type model:GamerClass}">
+                        <StackPanel>
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Background" Value="{x:Null}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsGotShot}" Value="True">
+                                            <Setter Property="Background" Value="Red"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <Image Width="{Binding Width}" Height="{Binding Height}" Source="/Invasion of Gooks;component/Resources/helicopter.png"/>
+                            <!--<main:HealthLineUC FullHealth="{Binding FullHealth}" CurrentHealth="{Binding Health}" CountParts="5" Width="{Binding Width}" Height="10"/>
+                            <ProgressBar Width="{Binding Width}" Maximum="{Binding FullHealth}" Minimum="0" Value="{Binding Health}" Foreground="Red"/>
+                            <TextBlock  Text="{Binding Gamer.Health}" Height="15" Width="30" Background="Red" Opacity="0.3"/>-->
+                            
+                        </StackPanel>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type model:EnemyClass}">
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{x:Null}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Intersection}" Value="True">
+                                            <Setter Property="Background" Value="Green"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Image Width="{Binding Width}" Height="{Binding Height}" Source="/Invasion of Gooks;component/Resources/helicopter_desert.png"/>
+                        </Border>
+                        <!--<Image Width="{Binding Width}" Height="{Binding Height}" Source="/Invasion of Gooks;component/Resources/helicopter_desert.png"/>-->
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type model:BulletEnemyClass}">
+                        <Image Width="{Binding Width}" Height="{Binding Height}" Source="/Invasion of Gooks;component/Resources/prjctlgooks.png" />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type model:BulletGamerClass}">
+                        <Image Width="{Binding Width}" Height="{Binding Height}" Source="/Invasion of Gooks;component/Resources/prjctlgmr.png" />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type model:RocketEnemyClass}">
+
+                        <Image Width="{Binding Width}" Height="{Binding Height}" Source="/Invasion of Gooks;component/Resources/rocket.png" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <RotateTransform Angle="{Binding Angle}"/>
+                            </Image.RenderTransform>
+                        </Image>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type model:RocketGamerClass}">
+
+                        <Image Width="{Binding Width}" Height="{Binding Height}" Source="/Invasion of Gooks;component/Resources/rocket.png" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <RotateTransform Angle="{Binding Angle}"/>
+                            </Image.RenderTransform>
+                        </Image>
+                    </DataTemplate>
+                </ItemsControl.Resources>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Width="{Binding SkyWidth}" Height="{Binding SkyHeight}"/>
+
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Top" Value="{Binding Top, Delay=50}"/>
+                        <Setter Property="Canvas.Left" Value="{Binding Left, Delay=50}"/>
+                        <Setter Property="Panel.ZIndex" Value="{Binding ZIndex, Delay=50}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        </Grid>
+    </Viewbox>
+</Window>
