@@ -1,0 +1,56 @@
+﻿<Window x:Class="Invasion_of_Gooks.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Invasion_of_Gooks"
+        xmlns:viewmodel="clr-namespace:Invasion_of_Gooks.ViewModel"
+        xmlns:model="clr-namespace:Invasion_of_Gooks.Model"
+        xmlns:commlibrary="clr-namespace:CommLibrary;assembly=CommLibrary"
+        mc:Ignorable="d" DataContext="{x:Static viewmodel:ViewModelClass.ViewModel}"
+        Title="MainWindow" Height="760" Width="1360" Loaded="Window_Loaded" ContentRendered="Window_ContentRendered">
+    <Window.Resources>
+        <commlibrary:IsNullOrWhiteSpaceConverter x:Key="IsNullOrWhiteSpaceConverter"/>
+    </Window.Resources>
+    <Canvas x:Name="can">
+        <Image x:Name="fonMW" Source="/Invasion of Gooks;component/Resources/ClearFon.jpg" Stretch="Fill" Height="760" Width="1360"/>
+        <Button x:Name="Start" Content="Start"
+                Height="50" Width="140" 
+                Canvas.Left="613"  Canvas.Top="350"
+                VerticalAlignment="Center" 
+                Click="Start_Click" 
+                FontFamily="Yamaha EBM7 Bold" FontSize="24"/>
+        <!--Command="{Binding StartCommand}" CommandParameter="{Binding Text, ElementName=nameTxt}"/>-->
+        <Button x:Name="Exit" Height="40" Width="40" VerticalAlignment="Bottom" HorizontalAlignment="Right" Canvas.Right="20" Canvas.Bottom="20" Click="Exit_Click">
+            <Image Source="/Invasion of Gooks;component/Resources/exit_image.png" Stretch="Fill" Height="34" Width="34"/>
+        </Button>
+        <Expander Header="Таблица лидеров" Height="400" Canvas.Left="1000" Canvas.Top="250" Width="300" IsExpanded="False">
+            <DataGrid x:Name="data" HorizontalAlignment="Left" Height="358" Margin="10,0,0,0" Width="280"
+                      AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name"/>
+                    <DataGridTextColumn Binding="{Binding Scr}" ClipboardContentBinding="{x:Null}" Header="Score"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Expander>
+        <!--<Grid Canvas.Left="553" Canvas.Top="433" Background="White">
+            <TextBlock x:Name="textBlock" Foreground="LightGray" FontSize="30">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, Converter={StaticResource IsNullOrWhiteSpaceConverter}, ElementName=nameTxt}"
+                                         Value="true">
+                                <Setter Property="Text" Value="Введите никнейм"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>-->
+        <TextBox x:Name="nameTxt" Text="Введите никнейм"
+                     Width="300" Height="50" 
+                     Foreground="Black" Canvas.Left="553" Canvas.Top="433" FontSize="30" TextChanged="NameTxt_TextChanged"/>
+        <!--FontSize="{Binding FontSize, ElementName=textBlock}"/>-->
+        <!--</Grid>-->
+        <!--<TextBlock x:Name="nameTxt" Text="Введите никнейм" Canvas.Left="553" TextWrapping="Wrap" Canvas.Top="433" Width="300" Height="50" Foreground="Black" Background="White"/>-->
+    </Canvas>
+</Window>
