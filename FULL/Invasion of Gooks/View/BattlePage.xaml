@@ -1,0 +1,15 @@
+﻿<Page x:Class="Invasion_of_Gooks.View.BattlePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Invasion_of_Gooks.View"
+      mc:Ignorable="d" ShowsNavigationUI="False" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="BattlePage">
+
+    <Grid>
+        <TextBlock Text="{Binding}"/>
+        <MediaElement Source="../Resources/Sound/menuSingle.wav" LoadedBehavior="Play"/>
+    </Grid>
+</Page>

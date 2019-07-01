@@ -2,9 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Invasion_of_Gooks"
-             StartupUri="MainWindow.xaml">
+             xmlns:media="clr-namespace:System.Media;assembly=System"
+             xmlns:coll="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+             Startup="Application_Startup">
 
     <Application.Resources>
-         
+        <Image x:Key="mp"/>
     </Application.Resources>
 </Application>

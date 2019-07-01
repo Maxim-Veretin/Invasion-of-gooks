@@ -10,7 +10,11 @@ using System.Windows.Input;
 namespace CommLibrary
 {
     #region Делегаты для методов WPF команд
+    /// <summary>Делегат исполняющего метода WPF команды</summary>
+    /// <param name="parameter">Параметер команды</param>
     public delegate void ExecuteHandler(object parameter);
+    /// <summary>Делегат проверяющего метода WPF команды</summary>
+    /// <param name="parameter">Параметер команды</param>
     public delegate bool CanExecuteHandler(object parameter);
     #endregion
 

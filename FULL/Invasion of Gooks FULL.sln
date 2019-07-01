@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.705
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invasion of Gooks", "Invasion of Gooks\Invasion of Gooks.csproj", "{7EE70081-3B34-41F6-A40B-BE19F59270FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommLibrary", "CommLibrary\CommLibrary.csproj", "{A460E641-A9CD-4CF1-8584-82D7B4F49507}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupIOG", "SetupIOG\SetupIOG.vdproj", "{F4392830-695B-4A15-A4C2-4D7A33E15BBB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvasionModel", "InvasionModel\InvasionModel.csproj", "{8481406B-884B-49E7-874E-4AA6C4041F5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvasionViewModel", "InvasionViewModel\InvasionViewModel.csproj", "{A68E0F75-8D90-49FD-A604-381335FDC552}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfCommControlLibrary", "WpfCommControlLibrary\WpfCommControlLibrary.csproj", "{56713F20-A941-4FD5-BB3A-1E216C5E43F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,8 +27,18 @@ Global
 		{A460E641-A9CD-4CF1-8584-82D7B4F49507}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A460E641-A9CD-4CF1-8584-82D7B4F49507}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A460E641-A9CD-4CF1-8584-82D7B4F49507}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4392830-695B-4A15-A4C2-4D7A33E15BBB}.Debug|Any CPU.ActiveCfg = Debug
-		{F4392830-695B-4A15-A4C2-4D7A33E15BBB}.Release|Any CPU.ActiveCfg = Release
+		{8481406B-884B-49E7-874E-4AA6C4041F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8481406B-884B-49E7-874E-4AA6C4041F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8481406B-884B-49E7-874E-4AA6C4041F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8481406B-884B-49E7-874E-4AA6C4041F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A68E0F75-8D90-49FD-A604-381335FDC552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68E0F75-8D90-49FD-A604-381335FDC552}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68E0F75-8D90-49FD-A604-381335FDC552}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68E0F75-8D90-49FD-A604-381335FDC552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56713F20-A941-4FD5-BB3A-1E216C5E43F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56713F20-A941-4FD5-BB3A-1E216C5E43F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56713F20-A941-4FD5-BB3A-1E216C5E43F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56713F20-A941-4FD5-BB3A-1E216C5E43F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

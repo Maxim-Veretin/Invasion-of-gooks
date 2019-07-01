@@ -10,7 +10,7 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:commlibrary="clr-namespace:CommLibrary;assembly=CommLibrary"
-        mc:Ignorable="d" DataContext="{x:Static viewmodel:ViewModelClass.ViewModel}"
+        mc:Ignorable="d" 
         Title="BattleWind" Height="450" Width="800" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" WindowState="Maximized">
     <!--<Window.DataContext>
         <viewmodel:ViewModelClass/>

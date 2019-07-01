@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ArrayOfDataGamer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <DataGamer>
+    <Name>Аня</Name>
+    <PointsScored>1500</PointsScored>
+  </DataGamer>
+  <DataGamer>
+    <Name>Ваня</Name>
+    <PointsScored>1999</PointsScored>
+  </DataGamer>
+  <DataGamer>
+    <Name>Саня</Name>
+    <PointsScored>777</PointsScored>
+  </DataGamer>
+  <DataGamer>
+    <Name>Таня</Name>
+    <PointsScored>666</PointsScored>
+  </DataGamer>
+  <DataGamer>
+    <Name>Федя</Name>
+    <PointsScored>2500</PointsScored>
+  </DataGamer>
+</ArrayOfDataGamer>

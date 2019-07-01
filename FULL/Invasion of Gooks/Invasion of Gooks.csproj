@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Invasion_of_Gooks</RootNamespace>
     <AssemblyName>Invasion of Gooks</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -17,6 +17,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -86,14 +87,26 @@
     </ApplicationDefinition>
     <Compile Include="Model\DataGamer.cs" />
     <Compile Include="Model\ModelDataBaseClass.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MediaPlayerEnum.cs" />
     <Compile Include="ViewModel\ViewModelClass - MainWindow.cs" />
     <Compile Include="ViewModel\ViewModelClass - Конструкторы.cs" />
     <Compile Include="ViewModel\ViewModelClass.cs" />
+    <Compile Include="View\BattlePage.xaml.cs">
+      <DependentUpon>BattlePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\BattleWind.xaml.cs">
       <DependentUpon>BattleWind.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EndGame.xaml.cs">
       <DependentUpon>EndGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PauseMenu.xaml.cs">
       <DependentUpon>PauseMenu.xaml</DependentUpon>
@@ -113,11 +126,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\BattlePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BattleWind.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EndGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,11 +158,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -149,6 +165,7 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -179,6 +196,14 @@
       <Project>{a460e641-a9cd-4cf1-8584-82d7b4f49507}</Project>
       <Name>CommLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InvasionModel\InvasionModel.csproj">
+      <Project>{8481406b-884b-49e7-874e-4aa6c4041f5c}</Project>
+      <Name>InvasionModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InvasionViewModel\InvasionViewModel.csproj">
+      <Project>{a68e0f75-8d90-49fd-a604-381335fdc552}</Project>
+      <Name>InvasionViewModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\fon4.gif" />
@@ -199,32 +224,66 @@
     <Resource Include="Resources\4hel.gif" />
     <Resource Include="Resources\heavyprjctl.png" />
     <Resource Include="Resources\ClearFon.jpg" />
-    <Resource Include="bin\Debug\DataGamers.xml" />
-    <Content Include="Resources\Sound\bossDie.wav" />
-    <Content Include="Resources\Sound\lowHPBoss.wav" />
-    <Content Include="Resources\Sound\menuSingle.wav" />
-    <Content Include="Resources\Sound\spawnBoss.wav" />
-    <Content Include="Resources\Sound\Смешарики - От винта bassboosted.wav" />
+    <Content Include="Resources\Sound\bossDie.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\lowHPBoss.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\menuSingle.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\spawnBoss.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\Смешарики - От винта bassboosted.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Босс%28А%29.png" />
     <Resource Include="Resources\engGame2.jpg" />
     <Resource Include="Resources\pobeda.png" />
-    <Content Include="Resources\Sound\bang.wav" />
-    <Content Include="Resources\Sound\bangBoom.wav" />
-    <Content Include="Resources\Sound\Death.wav" />
-    <Content Include="Resources\Sound\manyShot.wav" />
-    <Content Include="Resources\Sound\propeller.wav" />
-    <Content Include="Resources\Sound\propeller1.wav" />
-    <Content Include="Resources\Sound\rideOfTheValkyries.wav" />
-    <Content Include="Resources\Sound\rocket.wav" />
-    <Content Include="Resources\Sound\scream.wav" />
-    <Content Include="Resources\Sound\singleShot.wav" />
+    <Content Include="Resources\Sound\bang.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\bangBoom.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\Death.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\manyShot.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\propeller.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\propeller1.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\rideOfTheValkyries.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\rocket.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\scream.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sound\singleShot.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\дорога.gif" />
     <Resource Include="Resources\4gooks.png" />
     <Resource Include="Resources\prjctlgooks.png" />
     <Resource Include="Resources\rocket.png" />
-    <Resource Include="Resources\finalfon1.gif" />
+    <Content Include="Resources\finalfon1.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />
