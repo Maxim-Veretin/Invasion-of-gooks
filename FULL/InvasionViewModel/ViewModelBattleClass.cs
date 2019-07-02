@@ -67,10 +67,10 @@ namespace InvasionViewModel
             warSky.haveBoss = false;
             warSky.Gamer.Health = 10;
         }
-        //private void WarSky_ExplosionEvent(Sky sky, double top, double left, double width, double height)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        private void WarSky_ExplosionEvent(Sky sky, double top, double left, double width, double height)
+        {
+            throw new NotImplementedException();
+        }
         private void SaveResoult()
         {
             //dataGamer.Scr = warSky.scoreSky;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InvasionViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,24 @@ namespace Invasion_of_Gooks.View
     /// </summary>
     public partial class StartPage : Page
     {
-        public StartPage()
+        ViewModelDataBaseClass ViewModel { get; }
+        public StartPage(ViewModelDataBaseClass viewModel)
         {
             InitializeComponent();
+            ViewModel = viewModel;
+            DataContext = ViewModel;
         }
+
+        private void Page_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Page_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
     }
 }

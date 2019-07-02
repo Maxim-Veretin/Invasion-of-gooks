@@ -26,7 +26,7 @@ namespace InvasionViewModel
 
             warSky.SoundEvent += WarSky_SoundEvent;
             warSky.EndGameEvent += WarSky_EndGameEvent;
-            //warSky.ExplosionEvent += WarSky_ExplosionEvent;
+            warSky.ExplosionEvent += WarSky_ExplosionEvent;
 
             ////на паре
             ////gamePlayer.Open(new Uri("C:/Users/Admin/Desktop/Invasion of Gooks_попытка_2/Invasion of Gooks/Resources/Sound/rideOfTheValkyries.wav", UriKind.Absolute));

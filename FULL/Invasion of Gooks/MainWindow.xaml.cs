@@ -23,130 +23,15 @@ namespace Invasion_of_Gooks
 {
     public partial class MainWindow : Window
     {
-        //SQLiteConnection m_dbConnection;
-
-        public bool gameplay = false;
-
-        //private MediaPlayer bangPlayer = new MediaPlayer();
-        //private MediaPlayer mainPlayer = new MediaPlayer();
-
-        //ViewModelClass viewModel;
-        //DataGamer dataGamer;
-        //Sky warSky;
 
         public MainWindow()
         {
             InitializeComponent();
-
-            //MediaPlayerEnum.MainWindow.Play();
-
-            //bangPlayer.Open(new Uri(@"C:\Users\EldHa\Мои проекты\Максим\Invasion-of-gooks\FULL\Invasion of Gooks\bin\Debug\Resources\Sound\bang.wav", UriKind.Absolute));
-            //mainPlayer.Open(new Uri(@"C:\Users\EldHa\Мои проекты\Максим\Invasion-of-gooks\FULL\Invasion of Gooks\bin\Debug\Resources\Sound\menuSingle.wav", UriKind.Absolute));
-            //mainPlayer.Play();
-            //MediaPlayerExtensions.Players[MediaPlayerEnum.MainWindow].Play();
-
         }
 
-        private void Start_Click(object sender, RoutedEventArgs e)
-        {
-            //bangPlayer.Position = TimeSpan.Zero;
-            //bangPlayer.Play();
+        #region Переопределение закрытия окна и деактивация крестика закрытия
+        /// Код взят из https://stackoverflow.com/questions/743906/how-to-hide-close-button-in-wpf-window/1623991#1623991
 
-            //MediaPlayerExtensions.Players[MediaPlayerEnum.bang].Position = TimeSpan.Zero;
-            //MediaPlayerExtensions.Players[MediaPlayerEnum.bang].Play();
-
-
-            //MediaPlayerEnum.MainWindow.Play();
-
-            //MediaPlayerEnum.bang.Play(true);
-
-
-            ////viewModel.dataGamer.Name = nameTxt.Text;
-            ////viewModel.StartMetod(nameTxt.Text);
-            ////viewModel.NameGamer = nameTxt.Text;
-            ////viewModel.ResetValue();
-            //gameplay = true;
-            //mainPlayer.Stop();
-            //mainPlayer.Close();
-            //BattleWind battle = new BattleWind();
-            ////warSky.IsEndGame = false;
-            //this.Hide();
-
-            //battle.Owner = this;
-
-            //battle.Show();
-
-
-
-            ////this.Close();
-            ////this.Show();
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    //using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=C:\Users\Admin\Desktop\iog.db"))
-        //    //using (SQLiteConnection connection = new SQLiteConnection(@"Data Source=C:\Users\Администратор\Desktop\FULL\iog.db"))
-        //    //{
-        //    //    connection.Open();
-        //    //    SQLiteCommand command = new SQLiteCommand("Select * from kyrsach", connection);
-        //    //    SQLiteDataReader reader = command.ExecuteReader();
-
-        //    //    //string sql = "SELECT * FROM kyrsach ORDER BY Name";
-
-        //    //    while (reader.Read())
-        //    //    {
-        //    //        var dt = new DataGamer { Name = reader["Name"].ToString(), Scr = int.Parse(reader["Score"].ToString()) };
-        //    //        data.Items.Add(dt);
-        //    //    }
-        //    //    data.IsEnabled = true;
-
-        //    //    connection.Close();
-        //    //}
-        //    //data.ItemsSource = ModelDataBaseClass.DataGamers;
-        //}
-
-        private void NameTxt_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //Start.IsEnabled = !String.IsNullOrWhiteSpace(nameTxt.Text);
-        }
-
-        private void Window_ContentRendered(object sender, EventArgs e)
-        {
-
-            //viewModel = (ViewModelClass)DataContext;
-
-            //=====================================================
-            //viewModel.ResetValue();
-            //=====================================================
-            //warSry = (Sky)DataContext;
-            //mainPlayer.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/menuSingle.wav", UriKind.Absolute));
-            //mainPlayer.Play();
-            //MediaPlayerEnum.MainWindow.Play();
-        }
-
-        private void Window_Activated(object sender, EventArgs e)
-        {
-            //MediaPlayerEnum.MainWindow.Continue();
-        }
-
-        private void Window_Deactivated(object sender, EventArgs e)
-        {
-            MediaPlayerEnum.MainWindow.Pause();
-        }
-
-        //public void ScoreBase(int score)
-        //{
-        //    string sql = "INSERT INTO kyrsach (Name, Score) VALUES (" + "'" + name + "' ," + score + ")";
-        //    SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-
-        //    //var dt = new DataBase1 { name = name.Text, scr =  };
-        //    //data.Items.Add(dt);
-        //}
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -158,6 +43,8 @@ namespace Invasion_of_Gooks
                 hwndSource.AddHook(HwndSourceHook);
             }
         }
+
+        /// <summary>Разрешение на закрытие окна</summary>
         private bool allowClosing = false;
 
         [DllImport("user32.dll")]
@@ -196,15 +83,24 @@ namespace Invasion_of_Gooks
             return IntPtr.Zero;
         }
 
+        /// <summary>Новый метод программного закрытия с учётом переопределения 
+        /// внешних методов закрытия</summary>
         public new void Close()
         {
             allowClosing = true;
             base.Close();
         }
+        #endregion
 
-        private void Frame_LoadCompleted(object sender, NavigationEventArgs e)
+        protected override void OnActivated(EventArgs e)
         {
-           ((FrameworkElement) ((ContentControl)sender).Content).DataContext = ((ContentControl)sender).DataContext;
+            base.OnActivated(e);
+            MediaPlayerExtensions.AllContinue();
+        }
+        protected override void OnDeactivated(EventArgs e)
+        {
+            base.OnDeactivated(e);
+            MediaPlayerExtensions.AllPause();
         }
     }
 }

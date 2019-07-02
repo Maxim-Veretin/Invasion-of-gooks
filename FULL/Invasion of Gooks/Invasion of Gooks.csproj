@@ -39,7 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>Invasion_of_Gooks.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -85,6 +85,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Example.xaml.cs">
+      <DependentUpon>Example.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\DataGamer.cs" />
     <Compile Include="Model\ModelDataBaseClass.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -114,6 +117,10 @@
     <Compile Include="View\WinGame.xaml.cs">
       <DependentUpon>WinGame.xaml</DependentUpon>
     </Compile>
+    <Page Include="Example.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -203,6 +210,10 @@
     <ProjectReference Include="..\InvasionViewModel\InvasionViewModel.csproj">
       <Project>{a68e0f75-8d90-49fd-a604-381335fdc552}</Project>
       <Name>InvasionViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WpfCommControlLibrary\WpfCommControlLibrary.csproj">
+      <Project>{56713f20-a941-4fd5-bb3a-1e216c5e43f1}</Project>
+      <Name>WpfCommControlLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -70,6 +70,11 @@ namespace InvasionModel
         }
     }
 
+    public class ExplosionClass : UFOClass
+    {
+        public ExplosionClass(double width, double heidht) : base(width, heidht) { }
+    }
+
     public class HeliopterClass : UFOClass
     {
         private DateTime _projectileTime;

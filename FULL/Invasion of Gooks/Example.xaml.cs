@@ -1,5 +1,4 @@
-﻿using InvasionViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,22 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Invasion_of_Gooks.View
+namespace Invasion_of_Gooks
 {
     /// <summary>
-    /// Логика взаимодействия для BattlePage.xaml
+    /// Логика взаимодействия для Example.xaml
     /// </summary>
-    public partial class BattlePage : Page
+    public partial class Example : Window
     {
-        ViewModelBattleClass ViewModelBattle { get; }
-        public BattlePage(ViewModelBattleClass viewModelBattle)
+        public Example()
         {
             InitializeComponent();
-            ViewModelBattle = viewModelBattle;
-            DataContext = ViewModelBattle;
         }
     }
 }

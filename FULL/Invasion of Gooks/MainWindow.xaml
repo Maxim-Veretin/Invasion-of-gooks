@@ -6,25 +6,6 @@
         xmlns:viewmodel="clr-namespace:InvasionViewModel;assembly=InvasionViewModel"
         xmlns:commlibrary="clr-namespace:CommLibrary;assembly=CommLibrary"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d" d:DataContext="{x:Type viewmodel:ViewModelDataBaseClass}"
-        Title="MainWindow" Height="760" Width="1360" Activated="Window_Activated" Deactivated="Window_Deactivated">
-    <Window.Resources>
-        <!--<DataTemplate DataType="{x:Type viewmodel:ViewModelDataBaseClass}">
-            <Frame Source="/Invasion of Gooks;component/View/StartPage.xaml" 
-                      LoadCompleted="Frame_LoadCompleted"/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodel:ViewModelBattleClass}">
-            <Frame Source="/Invasion of Gooks;component/View/BattlePage.xaml" 
-                      LoadCompleted="Frame_LoadCompleted"/>
-        </DataTemplate>-->
-        <commlibrary:TypeUriConverter x:Key="TypeUriConverter"/>
-        <x:Array Type="{x:Type commlibrary:TypeUriPair}" x:Key="TypeUriConverter.Array">
-            <commlibrary:TypeUriPair Key="{x:Type viewmodel:ViewModelDataBaseClass}" Source="/Invasion of Gooks;component/View/StartPage.xaml"/>
-            <commlibrary:TypeUriPair Key="{x:Type viewmodel:ViewModelBattleClass}" Source="View/BattlePage.xaml"/>
-        </x:Array>
-
-    </Window.Resources>
-    <Frame Source="{Binding Converter={StaticResource TypeUriConverter}, Mode=OneWay, ConverterParameter={StaticResource TypeUriConverter.Array}}" 
-           LoadCompleted="Frame_LoadCompleted"
-           NavigationUIVisibility="Hidden"/>
+        mc:Ignorable="d"
+        Title="MainWindow" Height="760" Width="1360" >
 </Window>

@@ -1,4 +1,5 @@
 ﻿using Invasion_of_Gooks.Properties;
+using Invasion_of_Gooks.View;
 using InvasionViewModel;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,10 @@ namespace Invasion_of_Gooks
         readonly MainWindow mainWindow;
         readonly ViewModelBattleClass viewModelBattle;
         readonly ViewModelDataBaseClass viewModelDataBase;
-        private bool isExit  = false;
+
+        readonly StartPage startPage;
+        readonly BattlePage battlePage;
+        private bool isExit = false;
 
         public App()
         {
@@ -35,22 +39,33 @@ namespace Invasion_of_Gooks
                 );
             viewModelBattle = new ViewModelBattleClass();
             mainWindow = new MainWindow();
+            startPage = new StartPage(viewModelDataBase);
+            battlePage = new BattlePage(viewModelBattle);
             mainWindow.Closing += MainWindow_Closing;
         }
 
-        private void StartMetod(object parameter)
+        private void MainMetod(object parameter = null)
         {
-            mainWindow.DataContext = viewModelBattle;
+            mainWindow.Content = startPage;
+
+            MediaPlayerEnum.MainWindow.Play(true);
+            MediaPlayerEnum.MainWindow.Pause();
+        }
+
+        private void StartMetod(object parameter = null)
+        {
+            mainWindow.Content = battlePage;
+            MediaPlayerEnum.MainWindow.Pause();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel=!isExit;
+            e.Cancel = !isExit;
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            mainWindow.DataContext = viewModelDataBase;
+            MainMetod();
             mainWindow.Show();
         }
 

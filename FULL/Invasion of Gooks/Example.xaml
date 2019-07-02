@@ -1,0 +1,54 @@
+﻿<Window x:Class="Invasion_of_Gooks.Example"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Invasion_of_Gooks"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:commlibrary="clr-namespace:CommLibrary;assembly=CommLibrary"
+        xmlns:wpfLib="clr-namespace:WpfCommControlLibrary;assembly=WpfCommControlLibrary"
+        mc:Ignorable="d"
+        Title="Example" Height="450" Width="800">
+    <Window.Resources>
+        <!--<viewmodel:ViewModelClass x:Key="ViewModel"/>-->
+        <BitmapImage x:Key="Explosion.Image" UriSource="/Invasion of Gooks;component/Resources/vz.png"/>
+        <sys:UInt32 x:Key="Explosion.Interval">50</sys:UInt32>
+        <x:Array x:Key="Explosion.Frames" Type="{x:Type Rect}">
+            <Rect X="0" Y="0" Width="380" Height="380"/>
+            <Rect X="380" Y="0" Width="380" Height="380"/>
+            <Rect X="760" Y="0" Width="380" Height="380"/>
+            <Rect X="1140" Y="0" Width="420" Height="380"/>
+        </x:Array>
+        <commlibrary:IIfConverter x:Key="IIfConverter"/>
+        <x:Array x:Key="IsStopIIfConverter" Type="{x:Type sys:Int32}">
+            <sys:Int32>0</sys:Int32>
+            <sys:Int32>1</sys:Int32>
+        </x:Array>
+        <commlibrary:GetTypeConverter x:Key="GetTypeConverter"/>
+    </Window.Resources>
+    <Grid>
+        <wpfLib:AnimationFrames x:Name="animationFrames" ImageFrames="{Binding Mode=OneWay, Source={StaticResource Explosion.Image}}" 
+                                Frames="{Binding Mode=OneWay, Source={StaticResource Explosion.Frames}}" 
+                                Interval="1000" 
+                                Action="Start" Replay="True" Width="100" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <wpfLib:AnimationFrames ImageFrames="{Binding Mode=OneWay, Source={StaticResource Explosion.Image}}" 
+                                Frames="{Binding Mode=OneWay, Source={StaticResource Explosion.Frames}}" CurrentFrame="2"
+                                Interval="{Binding Mode=OneWay, Source={StaticResource Explosion.Interval}}" 
+                                Action="Start" Replay="True" Width="100" Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <!--<StackPanel DataContext="{Binding ElementName=animationFrames, Mode=OneWay}">
+                <Image Height="100" Source="{Binding ImageFrames, Mode=OneWay}"/>
+                <Image Height="100" Source="{Binding Mode=OneWay, Source={StaticResource Explosion.Image}}" />
+                <TextBlock>
+                <Run Text="{Binding Visibility, Mode=OneWay}"/>
+                <Run Text="{Binding CurrentFrame, Mode=OneWay}"/>
+                <Run Text="{Binding Action, Mode=OneWay}"/>
+                <Run Text="{Binding ImageFrame.Viewbox, Mode=OneWay}"/>
+                <LineBreak/>
+                <Run Text="{Binding ImageFrame.ImageSource, Mode=OneWay}"/>
+                <LineBreak/>
+                <Run Text="{Binding ImageFrame.ImageSource, Converter={StaticResource GetTypeConverter}, Mode=OneWay, ConverterParameter=prop}"/>
+            </TextBlock>
+        </StackPanel>-->
+
+    </Grid>
+</Window>

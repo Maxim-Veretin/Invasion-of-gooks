@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Invasion_of_Gooks"
              xmlns:media="clr-namespace:System.Media;assembly=System"
-             xmlns:coll="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+             xmlns:coll="clr-namespace:System.Collections.Generic;assembly=mscorlib" 
              Startup="Application_Startup">
+             <!--StartupUri="Example.xaml"             >-->
 
     <Application.Resources>
         <Image x:Key="mp"/>
