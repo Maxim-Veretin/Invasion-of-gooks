@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AngleRotateConverter.cs" />
     <Compile Include="BooleanToVisibilityConverter.cs" />
+    <Compile Include="CommandExtensions.cs" />
     <Compile Include="CompareConverter.cs" />
     <Compile Include="DebugConverter.cs" />
     <Compile Include="GetTypeConverter.cs" />
