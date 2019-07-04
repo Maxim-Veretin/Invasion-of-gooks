@@ -1,14 +1,8 @@
-﻿using Invasion_of_Gooks.ViewModel;
-using Invasion_of_Gooks.Model;
+﻿using InvasionModel;
+using InvasionViewModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -26,7 +20,7 @@ namespace Invasion_of_Gooks.View
         public MediaPlayer gamePlayer = new MediaPlayer();
         public MediaPlayer gamePlayerPropellers = new MediaPlayer();
 
-        ViewModelClass viewModel;
+        ViewModelBattleClass viewModel;
         
         DispatcherTimer timerAnimation = new DispatcherTimer();
 
@@ -70,10 +64,10 @@ namespace Invasion_of_Gooks.View
             gamePlayerPropellers.Volume = 0.3;
             gamePlayerPropellers.Play();
 
-            viewModel = (ViewModelClass)DataContext;
+            viewModel = (ViewModelBattleClass)DataContext;
             Resources["ViewModel"] = viewModel;
             //================================================!!!=================
-            viewModel.own = this;
+            //viewModel.own = this;
 
             viewModel.warSky.ExplosionEvent += WarSky_ExplosionEvent;
 

@@ -88,17 +88,13 @@
     <Compile Include="Example.xaml.cs">
       <DependentUpon>Example.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataGamer.cs" />
-    <Compile Include="Model\ModelDataBaseClass.cs" />
+    <Compile Include="ExplosionAnimationFramesActionConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="MediaPlayerEnum.cs" />
-    <Compile Include="ViewModel\ViewModelClass - MainWindow.cs" />
-    <Compile Include="ViewModel\ViewModelClass - Конструкторы.cs" />
-    <Compile Include="ViewModel\ViewModelClass.cs" />
     <Compile Include="View\BattlePage.xaml.cs">
       <DependentUpon>BattlePage.xaml</DependentUpon>
     </Compile>
@@ -107,6 +103,15 @@
     </Compile>
     <Compile Include="View\EndGame.xaml.cs">
       <DependentUpon>EndGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExitBattlePage.xaml.cs">
+      <DependentUpon>ExitBattlePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExitBattleUC.xaml.cs">
+      <DependentUpon>ExitBattleUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PauseGameUC.xaml.cs">
+      <DependentUpon>PauseGameUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
@@ -145,6 +150,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ExitBattlePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExitBattleUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PauseGameUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,9 +176,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ModelClass.cs" />
-    <Compile Include="Model\Sky.cs" />
-    <Compile Include="Model\UFOClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

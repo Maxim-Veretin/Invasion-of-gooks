@@ -21,8 +21,8 @@ namespace InvasionViewModel
 
         private readonly ModelClass model = new ModelClass();
 
-        public ObservableCollection<UFOClass> UFOitems { get; }
-        public GamerClass Gamer { get; }
+        public ObservableCollection<UFOClass> UFOitems { get => _uFOitems; private set { _uFOitems = value; OnPropertyChanged(); } }
+        //public GamerClass Gamer { get => _gamer; private set { _gamer = value; OnPropertyChanged(); } }
 
         //public DataGamer dataGamer;
 
@@ -36,6 +36,8 @@ namespace InvasionViewModel
         public MediaPlayer pleer1 = new MediaPlayer();
         public MediaPlayer pleer2 = new MediaPlayer();
         private bool _isStop;
+        private ObservableCollection<UFOClass> _uFOitems;
+        private GamerClass _gamer;
 
         public bool IsStop { get => _isStop; private set { _isStop = value; OnPropertyChanged(); } }
         /// <summary>Метод разрешающий выполнение команды</summary>
@@ -45,7 +47,7 @@ namespace InvasionViewModel
         //{
         //    return parameter is object[] arr && arr.Length>1 && int.TryParse( arr[1].ToString(), out int _tmp);
         //}
-        
+
         //private void SaveResultMetod(object parameter)
         //{
         //    if (SaveResultCanMetod(parameter))
@@ -54,19 +56,20 @@ namespace InvasionViewModel
         //        model.SaveResult(new DataGamer() { Name=arr[0].ToString(), Scr = int.Parse(arr[1].ToString())});
         //    }
         //}
-        public void ResetValue()
-        {
-            //warSky = new Sky();
-            Gamer.Top = 760 * .9;
-            Gamer.Left = 1360 * .5;
-            Gamer.SpeedHorizontal = 0;
-            Gamer.SpeedVertical = 0;
-            //warSky.timer.Tick -= Timer_Tick;
-            warSky.IsEndGame = false;
-            warSky.scoreSky = 0;
-            warSky.haveBoss = false;
-            warSky.Gamer.Health = 10;
-        }
+        //public void ResetValue()
+        //{
+        //    //warSky = new Sky();
+        //    Gamer.Top = 760 * .9;
+        //    Gamer.Left = 1360 * .5;
+        //    Gamer.SpeedHorizontal = 0;
+        //    Gamer.SpeedVertical = 0;
+        //    //warSky.timer.Tick -= Timer_Tick;
+        //    warSky.IsEndGame = false;
+        //    warSky.scoreSky = 0;
+        //    //warSky.haveBoss = false;
+        //    warSky.Gamer.Health = 10;
+
+        //}
         private void WarSky_ExplosionEvent(Sky sky, double top, double left, double width, double height)
         {
             throw new NotImplementedException();
@@ -92,12 +95,12 @@ namespace InvasionViewModel
 
         private void WarSky_EndGameEvent(Sky sky, EndGameEnum endGame)
         {
-            model.PauseStart(false);
+            model.GamePause();
             //gamePlayer.Close();
             //gamePlayerPropellers.Close();
             //DtGamer.Scr = warSky.scoreSky;
-                     IsStop = true;
-            
+            IsStop = true;
+
             switch (endGame)
             {
                 case EndGameEnum.Losing:
@@ -111,7 +114,7 @@ namespace InvasionViewModel
                     break;
 
                 case EndGameEnum.Win:
-                    
+
                     SaveResoult();
                     //WinGame winGame = new WinGame();
                     //winGame.ShowDialog();
@@ -127,41 +130,42 @@ namespace InvasionViewModel
         }
 
         //private readonly Dictionary<SoundEnum, MediaPlayer> Pleers = new Dictionary<SoundEnum, MediaPlayer>();
-        private void WarSky_SoundEvent(Sky sky, SoundEnum sound)
+        private void WarSky_SoundEvent(object sender, SoundEnum sound)
         {
-            switch (sound)
-            {
-                case SoundEnum.enemyDie:
-                    //на паре
-                    pleer.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/bang.wav", UriKind.Absolute));
+            OnSound(sound);
+            //switch (sound)
+            //{
+            //    case SoundEnum.enemyDie:
+            //        //на паре
+            //        pleer.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/bang.wav", UriKind.Absolute));
 
-                    //дома
-                    //pleer.Open(new Uri("C:/Users/Администратор/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/Sound/bang.wav", UriKind.Absolute));
-                    pleer.Volume = 0.5;
-                    pleer.Play();
-                    break;
+            //        //дома
+            //        //pleer.Open(new Uri("C:/Users/Администратор/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/Sound/bang.wav", UriKind.Absolute));
+            //        pleer.Volume = 0.5;
+            //        pleer.Play();
+            //        break;
 
-                case SoundEnum.gamerShot:
-                    //на паре
-                    pleer1.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/singleShot.wav", UriKind.Absolute));
+            //    case SoundEnum.gamerShot:
+            //        //на паре
+            //        pleer1.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/singleShot.wav", UriKind.Absolute));
 
-                    //дома
-                    //pleer1.Open(new Uri("C:/Users/Администратор/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/Sound/singleShot.wav", UriKind.Absolute));
-                    pleer1.Volume = 0.1;
-                    pleer1.Play();
-                    break;
+            //        //дома
+            //        //pleer1.Open(new Uri("C:/Users/Администратор/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/Sound/singleShot.wav", UriKind.Absolute));
+            //        pleer1.Volume = 0.1;
+            //        pleer1.Play();
+            //        break;
 
-                case SoundEnum.gamerRocket:
-                    //на паре
-                    pleer2.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/rocket.wav", UriKind.Absolute));
+            //    case SoundEnum.gamerRocket:
+            //        //на паре
+            //        pleer2.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/rocket.wav", UriKind.Absolute));
 
-                    //дома
-                    //pleer2.Open(new Uri("C:/Users/Администратор/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/Sound/rocket.wav", UriKind.Absolute));
-                    pleer2.Volume = 0.1;
-                    pleer2.Play();
-                    break;
-            }
-            // Pleers[sound].Play();
+            //        //дома
+            //        //pleer2.Open(new Uri("C:/Users/Администратор/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/Sound/rocket.wav", UriKind.Absolute));
+            //        pleer2.Volume = 0.1;
+            //        pleer2.Play();
+            //        break;
+            //}
+            //// Pleers[sound].Play();
         }
 
         public void KeyUser(KeyControl action)
@@ -170,11 +174,11 @@ namespace InvasionViewModel
             {
                 case KeyControl.Pause:
                     IsStop = true;
-                    model.PauseStart(false);
+                    model.GamePause();
                     break;
                 case KeyControl.Continue:
                     IsStop = false;
-                    model.PauseStart(true);
+                    model.GameContinue();
                     break;
 
                 case KeyControl.Up:
@@ -187,8 +191,8 @@ namespace InvasionViewModel
                 case KeyControl.DownRight:
                 case KeyControl.DownLeft:
                 case KeyControl.Pif:
-                //case KeyControl Paf:
-                    model.SetAction((DirecionEnum)action);
+                    //case KeyControl Paf:
+                    model.SetAction((ActionEnum)action);
                     break;
             }
         }

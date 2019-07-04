@@ -13,17 +13,23 @@ namespace Invasion_of_Gooks.Model
         private double _top;
         private double _speedHorizontal;
         private double _speedVertical;
-        private bool _isGotShot;
+        //private bool _isGotShot;
         private double _width;
         private double _heidht;
 
+        /// <summary>Ширина</summary>
         public double Width { get => _width; set { _width = value; OnPropertyChanged(); } }
+        /// <summary>Высота</summary>
         public double Heidht { get => _heidht; set { _heidht = value; OnPropertyChanged(); } }
+        /// <summary>Смещение сверху</summary>
         public double Top { get => _top; set { _top = value; OnPropertyChanged(); } }
+        /// <summary>Смещение слева</summary>
         public double Left { get => _left; set { _left = value; OnPropertyChanged(); } }
+        /// <summary>Вертикальная скорость</summary>
         public double SpeedVertical { get => _speedVertical; set { _speedVertical = value; OnPropertyChanged(); } }
+        /// <summary>Горизонтальная скорость</summary>
         public double SpeedHorizontal { get => _speedHorizontal; set { _speedHorizontal = value; OnPropertyChanged(); } }
-        public bool IsGotShot { get => _isGotShot; set { _isGotShot = value; OnPropertyChanged(); } }
+        //public bool IsGotShot { get => _isGotShot; set { _isGotShot = value; OnPropertyChanged(); } }
 
         public bool Intersection(UFOClass ufo)
         {
@@ -71,24 +77,24 @@ namespace Invasion_of_Gooks.Model
 
         public void CopyTo(UFOClass other)
         {
-           other. Width = Width;
-            Heidht = Heidht;
-            IsGotShot = IsGotShot;
-            Left = Left;
-            SpeedHorizontal = SpeedHorizontal;
-            SpeedVertical = SpeedVertical;
-            Top = Top;
+            other.Width = Width;
+            other.Heidht = Heidht;
+            //IsGotShot = IsGotShot;
+            other.Left = Left;
+            other.SpeedHorizontal = SpeedHorizontal;
+            other.SpeedVertical = SpeedVertical;
+            other.Top = Top;
         }
 
         public void CopyFrom(UFOClass other)
         {
-            other.Width = Width;
-            Heidht = Heidht;
-            IsGotShot = IsGotShot;
-            Left = Left;
-            SpeedHorizontal = SpeedHorizontal;
-            SpeedVertical = SpeedVertical;
-            Top = Top;
+            Width = other.Width;
+            Heidht = other.Heidht;
+            //IsGotShot = IsGotShot;
+            Left = other.Left;
+            SpeedHorizontal = other.SpeedHorizontal;
+            SpeedVertical = other.SpeedVertical;
+            Top = other.Top;
         }
 
         public object Clone() => Copy<UFOClass>();
@@ -99,7 +105,7 @@ namespace Invasion_of_Gooks.Model
             {
                 Width = Width,
                 Heidht = Heidht,
-                IsGotShot = IsGotShot,
+                //IsGotShot = IsGotShot,
                 Left = Left,
                 SpeedHorizontal = SpeedHorizontal,
                 SpeedVertical = SpeedVertical,
@@ -110,8 +116,8 @@ namespace Invasion_of_Gooks.Model
 
     public class ExplosionClass : UFOClass
     {
-        private bool _isRemove;
-        /// <summary>Элемены с установленным свойством должны быть удалены</summary>
+        private bool _isRemove = true;
+        /// <summary>Элементы с установленным свойством должны быть удалены</summary>
         public bool IsRemove { get => _isRemove; private set { _isRemove = value; OnPropertyChanged(); } }
         public void Remove() => IsRemove = true;
     }
@@ -153,7 +159,7 @@ namespace Invasion_of_Gooks.Model
     public class ProjectileGamerClass : ProjectileClass
     {
     }
-    /// <summary>Класс выстрелоу противников</summary>
+    /// <summary>Класс выстрелов противников</summary>
     public class ProjectileEnemyClass : ProjectileClass
     {
     }

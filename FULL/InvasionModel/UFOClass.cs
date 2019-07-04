@@ -3,27 +3,29 @@ using System;
 
 namespace InvasionModel
 {
-    public class UFOClass : OnPropertyChangedClass
+    public class UFOClass : OnPropertyChangedClass, ICopy<UFOClass>
     {
         private double _left;
         private double _top;
         private double _speedHorizontal;
         private double _speedVertical;
-        private bool _isGotShot;
+        //private bool _isGotShot;
+        private double _width;
+        private double _heidht;
 
-        public double Width { get; }
-        public double Heidht { get; }
+        /// <summary>Ширина</summary>
+        public double Width { get => _width; set { _width = value; OnPropertyChanged(); } }
+        /// <summary>Высота</summary>
+        public double Heidht { get => _heidht; set { _heidht = value; OnPropertyChanged(); } }
+        /// <summary>Смещение сверху</summary>
         public double Top { get => _top; set { _top = value; OnPropertyChanged(); } }
+        /// <summary>Смещение слева</summary>
         public double Left { get => _left; set { _left = value; OnPropertyChanged(); } }
+        /// <summary>Вертикальная скорость</summary>
         public double SpeedVertical { get => _speedVertical; set { _speedVertical = value; OnPropertyChanged(); } }
+        /// <summary>Горизонтальная скорость</summary>
         public double SpeedHorizontal { get => _speedHorizontal; set { _speedHorizontal = value; OnPropertyChanged(); } }
-        public bool IsGotShot { get => _isGotShot; set { _isGotShot = value; OnPropertyChanged(); } }
-
-        public UFOClass(double width, double heidht)
-        {
-            Width = width;
-            Heidht = heidht;
-        }
+        //public bool IsGotShot { get => _isGotShot; set { _isGotShot = value; OnPropertyChanged(); } }
 
         public bool Intersection(UFOClass ufo)
         {
@@ -68,11 +70,52 @@ namespace InvasionModel
                     )
                   );
         }
+
+        public void CopyTo(UFOClass other)
+        {
+            other.Width = Width;
+            other.Heidht = Heidht;
+            //IsGotShot = IsGotShot;
+            other.Left = Left;
+            other.SpeedHorizontal = SpeedHorizontal;
+            other.SpeedVertical = SpeedVertical;
+            other.Top = Top;
+        }
+
+        public void CopyFrom(UFOClass other)
+        {
+            Width = other.Width;
+            Heidht = other.Heidht;
+            //IsGotShot = IsGotShot;
+            Left = other.Left;
+            SpeedHorizontal = other.SpeedHorizontal;
+            SpeedVertical = other.SpeedVertical;
+            Top = other.Top;
+        }
+
+        public object Clone() => Copy<UFOClass>();
+
+        public virtual T1 Copy<T1>() where T1 : UFOClass, new()
+        {
+            return new T1()
+            {
+                Width = Width,
+                Heidht = Heidht,
+                //IsGotShot = IsGotShot,
+                Left = Left,
+                SpeedHorizontal = SpeedHorizontal,
+                SpeedVertical = SpeedVertical,
+                Top = Top
+            };
+        }
     }
 
     public class ExplosionClass : UFOClass
     {
-        public ExplosionClass(double width, double heidht) : base(width, heidht) { }
+        private bool _isRemove = true;
+        /// <summary>Элементы с установленным свойством должны быть удалены</summary>
+        public bool IsRemove { get => _isRemove; private set { _isRemove = value; OnPropertyChanged(); } }
+        public void Remove() => IsRemove = true;
     }
 
     public class HeliopterClass : UFOClass
@@ -81,8 +124,6 @@ namespace InvasionModel
         private double _health;
         private double _fullHealth;
 
-        public HeliopterClass(double width, double heidht) : base(width, heidht) { }
-        
         /// <summary>Здоровье</summary>
         public double Health { get => _health; set { _health = value; OnPropertyChanged(); } }
         /// <summary>Полное здоровье</summary>
@@ -94,35 +135,29 @@ namespace InvasionModel
     /// <summary>Класс НЛО игрока</summary>
     public class GamerClass : HeliopterClass
     {
-        public GamerClass(double width, double heidht) : base(width, heidht) { }
     }
-    
+
     /// <summary>Класс НЛО противника</summary>
     public class EnemyClass : HeliopterClass
     {
-        public EnemyClass(double width, double heidht) : base(width, heidht) { }
     }
 
     /// <summary>Класс босса</summary>
     public class EnemyBossClass : EnemyClass
     {
-        public EnemyBossClass(double width, double heidht) : base(width, heidht) { }
     }
 
     /// <summary>Класс выстрелов</summary>
     public class ProjectileClass : UFOClass
     {
-        public ProjectileClass(double width, double heidht) : base(width, heidht) { }
     }
-     /// <summary>Класс выстрелов Игрока</summary>
+    /// <summary>Класс выстрелов Игрока</summary>
     public class ProjectileGamerClass : ProjectileClass
     {
-        public ProjectileGamerClass(double width, double heidht) : base(width, heidht) { }
     }
-   /// <summary>Класс выстрелоу противников</summary>
+    /// <summary>Класс выстрелов противников</summary>
     public class ProjectileEnemyClass : ProjectileClass
     {
-        public ProjectileEnemyClass(double width, double heidht) : base(width, heidht) { }
     }
 
     /// <summary>Класс выстрел-ракетой</summary>
@@ -130,15 +165,12 @@ namespace InvasionModel
     {
         private double _angle;
 
-        public RocketEnemyClass(double width, double heidht) : base(width, heidht) { }
-
         public double Angle { get => _angle; set { _angle = value; OnPropertyChanged(); } }
     }
 
     /// <summary>Класс выстрел-снарядом</summary>
     public class BulletEnemyClass : ProjectileEnemyClass
     {
-        public BulletEnemyClass(double width, double heidht) : base(width, heidht) { }
     }
 
     /// <summary>Класс выстрел-ракетой</summary>
@@ -146,14 +178,11 @@ namespace InvasionModel
     {
         private double _angle;
 
-        public RocketGamerClass(double width, double heidht) : base(width, heidht) { }
-
         public double Angle { get => _angle; set { _angle = value; OnPropertyChanged(); } }
     }
 
     /// <summary>Класс выстрел-снарядом</summary>
     public class BulletGamerClass : ProjectileGamerClass
     {
-        public BulletGamerClass(double width, double heidht) : base(width, heidht) { }
     }
 }

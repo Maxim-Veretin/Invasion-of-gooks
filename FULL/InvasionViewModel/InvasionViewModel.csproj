@@ -45,10 +45,13 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModelBattleClass - Команды, методы.cs" />
+    <Compile Include="ViewModelBattleClass - Свойства.cs" />
     <Compile Include="ViewModelBattleClass - Конструкторы.cs" />
     <Compile Include="ViewModelBattleClass.cs" />
     <Compile Include="ViewModelDataBaseClass.cs" />
     <Compile Include="ViewModelMain.cs" />
+    <Compile Include="ViewModelStatic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommLibrary\CommLibrary.csproj">

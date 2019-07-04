@@ -116,15 +116,22 @@ namespace Invasion_of_Gooks.Model
     public class Sky
     {
         /// <summary>количество yбитых врагов</summary>
-        public int frags = 0;
-
-        public bool haveBoss = false;
+        public int Frags
+        {
+            get => _frags; private set
+            {
+                if (_frags < 10 && value > 9)
+                    CreateBoss();
+                _frags = value;
+            }
+        }
+        //public bool haveBoss = false;
         public int scoreSky = 0;
         //public bool bossDie = false;
 
         public MediaPlayer enemyPlayer = new MediaPlayer();
-        
-        /// <summary>Парметры неба</summary>
+
+        /// <summary>Параметры неба</summary>
         public SkySetting Setting { get; }
 
         /// <summary>Событие вызова звука</summary>
@@ -148,7 +155,7 @@ namespace Invasion_of_Gooks.Model
 
         private void OnExplosion(double top, double left, double width, double height)
         {
-            ExplosionEvent?.Invoke(this,  top,  left,  width,  height);
+            ExplosionEvent?.Invoke(this, top, left, width, height);
         }
 
         /// <summary>Ширина неба</summary>
@@ -192,8 +199,10 @@ namespace Invasion_of_Gooks.Model
             Ratio = Width / Heidht;
 
             //создание игрока
-            Gamer = new GamerClass(Setting.GamerWidth, Setting.GamerHeight)
+            Gamer = new GamerClass()
             {
+                Width = Setting.GamerWidth,
+                Heidht = Setting.GamerHeight,
                 SpeedVertical = 0,
                 SpeedHorizontal = 0,
                 Left = Setting.Width * .5,
@@ -212,7 +221,7 @@ namespace Invasion_of_Gooks.Model
             ShareRockets = Setting.EnemyShareRockets;
 
             oldEnemy = timeOld;
-            oldProjecileEnemy = timeOld;
+            //oldProjecileEnemy = timeOld;
 
             //timer.Start();
         }
@@ -220,11 +229,11 @@ namespace Invasion_of_Gooks.Model
         /// <summary>время создания предыдyщего врага</summary>
         private DateTime oldEnemy;
 
-        private DateTime spawnBooss;
+        //private DateTime spawnBooss;
 
         /// <summary>время создания предыдyщего cнаряда</summary>
-        private DateTime oldProjecileEnemy;
-
+        //private DateTime oldProjecileEnemy;
+        private int _frags = 0;
         private static readonly Random random = new Random();
 
         public void Timer_Tick(object sender, EventArgs e)
@@ -250,11 +259,11 @@ namespace Invasion_of_Gooks.Model
                 HittingGamer();
                 HittingEnemies();
                 CreateEnemies();
-
-                if ((frags >= 10) && (haveBoss == false))
-                {
-                    CreateBoss();
-                }
+                ExplosionRemove();
+                //if ((Frags >= 10) && (haveBoss == false))
+                //{
+                //    CreateBoss();
+                //}
             }
         }
 
@@ -287,10 +296,10 @@ namespace Invasion_of_Gooks.Model
                 if (Gamer.Health <= 0)
                 {
                     timer.Stop();
-                    
+
 
                     OnEndGame(EndGameEnum.Losing);
-                    
+
                     return;
                 }
             }
@@ -322,9 +331,9 @@ namespace Invasion_of_Gooks.Model
                     }
                     if (enemy.Health <= 0)
                     {
-                            frags++;
-                            OnSound(SoundEnum.enemyDie);
-                            OnExplosion(enemy.Top, enemy.Left, enemy.Width, enemy.Heidht);
+                        Frags++;
+                        OnSound(SoundEnum.enemyDie);
+                        OnExplosion(enemy.Top, enemy.Left, enemy.Width, enemy.Heidht);
                         if (enemy is EnemyBossClass)
                         {
                             scoreSky += 200;
@@ -337,11 +346,14 @@ namespace Invasion_of_Gooks.Model
                         else
                         {
                             scoreSky += 20;
-                            
+
                             //UFOitems.Remove(enemy);
                         }
-                            UFOitems.Remove(enemy);
-
+                        UFOitems.Remove(enemy);
+                        ExplosionClass explosion = enemy.Copy<ExplosionClass>();
+                        explosion.SpeedHorizontal = 0;
+                        explosion.SpeedVertical = 0;
+                        UFOitems.Add(explosion);
                         //if (bossDie == true)
                         //    OnEndGame(EndGameEnum.Win);
                         //else if((bossDie==false)&&(int.Parse((DateTime.Now-spawnBooss).Seconds.ToString())==41))
@@ -352,6 +364,17 @@ namespace Invasion_of_Gooks.Model
                 }
             }
         }
+
+        /// <summary>Удаление взорвавшихся взрывов</summary>
+        private void ExplosionRemove()
+        {
+            foreach (ExplosionClass explosion in UFOitems.OfType<ExplosionClass>().Where(item => item.IsRemove).ToArray())
+            {
+                UFOitems.Remove(explosion);
+            }
+        }
+
+
 
         /// <summary>Метод стрельбы противника</summary>
         private void ProjectiliesEnemies()
@@ -367,8 +390,10 @@ namespace Invasion_of_Gooks.Model
                 if (random.NextDouble() > Setting.EnemyShareRockets)
                 {
                     // Выстрел снарядом
-                    projectile = new BulletEnemyClass(Setting.EnemyBulletWidth, Setting.EnemyBulletHeight)
+                    projectile = new BulletEnemyClass()
                     {
+                        Width = Setting.EnemyBulletWidth,
+                        Heidht = Setting.EnemyBulletHeight,
                         Left = enemy.Left + enemy.Width * .5,
                         Top = enemy.Top + enemy.Heidht,
                         SpeedVertical = Setting.EnemyBulletSpeed
@@ -395,8 +420,10 @@ namespace Invasion_of_Gooks.Model
                     double rSpeed = Setting.EnemyRocketSpeed;
                     double rSpeedV = (rSpeed * dTop) / dLenght;
                     double rSpeedH = (rSpeed * dLeft) / dLenght;
-                    projectile = new RocketEnemyClass(Setting.EnemyRocketWidth, Setting.EnemyRocketHeight)
+                    projectile = new RocketEnemyClass()
                     {
+                        Width = Setting.EnemyRocketWidth,
+                        Heidht = Setting.EnemyRocketHeight,
                         Left = rLeft,
                         Top = rTop,
                         SpeedVertical = rSpeedV,
@@ -415,8 +442,10 @@ namespace Invasion_of_Gooks.Model
             //yбрать oldEnemy = timeOld для орды
             if ((timeOld - oldEnemy).TotalSeconds > Setting.EnemyFrequency)
             {
-                EnemyClass enemy = new EnemyClass(Setting.EnemyWidth, Setting.EnemyHeight)
+                EnemyClass enemy = new EnemyClass()
                 {
+                    Width = Setting.EnemyWidth,
+                    Heidht = Setting.EnemyHeight,
                     Top = 0,
                     Left = random.Next((int)(Width - Gamer.Width)),
                     SpeedVertical = Setting.EnemySpeed,
@@ -432,8 +461,10 @@ namespace Invasion_of_Gooks.Model
 
         private void CreateBoss()
         {
-            EnemyBossClass boss = new EnemyBossClass(Setting.EnemyBossWidth, Setting.EnemyBossHeight)
+            EnemyBossClass boss = new EnemyBossClass()
             {
+                Width = Setting.EnemyBossWidth,
+                Heidht = Setting.EnemyBossHeight,
                 Top = 0,
                 Left = Setting.Width * .3,
                 SpeedVertical = Setting.EnemyBossSpeed,
@@ -443,8 +474,8 @@ namespace Invasion_of_Gooks.Model
                 FullHealth = Setting.EnemyBossHealth
             };
             UFOitems.Add(boss);
-            haveBoss = true;
-            spawnBooss = DateTime.Now;
+            //haveBoss = true;
+            //spawnBooss = DateTime.Now;
         }
 
         /// <summary>Метод  перемещения всех НЛО объектов</summary>
@@ -483,7 +514,7 @@ namespace Invasion_of_Gooks.Model
                             OnEndGame(EndGameEnum.Losing);
                         }
                     }
-                    else 
+                    else
                     {
                         ufo.Top = _Top;
                         ufo.Left = _Left;
@@ -495,8 +526,10 @@ namespace Invasion_of_Gooks.Model
         /// <summary>Выстрел игрока снарядом</summary>
         public void GamerPifMethod()
         {
-            BulletGamerClass bulletgmr = new BulletGamerClass(Setting.GamerBulletWidth, Setting.GamerBulletHeight)
+            BulletGamerClass bulletgmr = new BulletGamerClass()
             {
+                Width = Setting.GamerBulletWidth,
+                Heidht = Setting.GamerBulletHeight,
                 Left = Gamer.Left + Gamer.Width * .5,
                 Top = Gamer.Top + Setting.GamerBulletHeight,
                 SpeedVertical = -Setting.GamerBulletSpeed
@@ -536,8 +569,10 @@ namespace Invasion_of_Gooks.Model
             double rSpeedV = (rSpeed * dTop) / dLenght;
             double rSpeedH = (rSpeed * dLeft) / dLenght;
 
-            RocketGamerClass rocketgmr = new RocketGamerClass(Setting.GamerRocketWidth, Setting.GamerRocketHeight)
+            RocketGamerClass rocketgmr = new RocketGamerClass()
             {
+                Width = Setting.GamerRocketWidth,
+                Heidht = Setting.GamerRocketHeight,
                 Left = rLeft,
                 Top = rTop,
                 SpeedVertical = rSpeedV,

@@ -4,10 +4,11 @@
              xmlns:local="clr-namespace:Invasion_of_Gooks"
              xmlns:media="clr-namespace:System.Media;assembly=System"
              xmlns:coll="clr-namespace:System.Collections.Generic;assembly=mscorlib" 
+             xmlns:commLib="clr-namespace:CommLibrary;assembly=CommLibrary"
              Startup="Application_Startup">
              <!--StartupUri="Example.xaml"             >-->
 
     <Application.Resources>
-        <Image x:Key="mp"/>
+        <commLib:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Application.Resources>
 </Application>

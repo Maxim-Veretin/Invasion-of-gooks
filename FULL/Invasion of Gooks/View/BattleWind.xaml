@@ -3,13 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:main="clr-namespace:Invasion_of_Gooks"
-        xmlns:local="clr-namespace:Invasion_of_Gooks.View"
-        xmlns:viewmodel="clr-namespace:Invasion_of_Gooks.ViewModel"
-        xmlns:model="clr-namespace:Invasion_of_Gooks.Model"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:commlibrary="clr-namespace:CommLibrary;assembly=CommLibrary"
+        xmlns:model="clr-namespace:InvasionModel;assembly=InvasionModel"
         mc:Ignorable="d" 
         Title="BattleWind" Height="450" Width="800" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" WindowState="Maximized">
     <!--<Window.DataContext>

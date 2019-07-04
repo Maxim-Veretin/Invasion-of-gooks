@@ -9,16 +9,16 @@ namespace InvasionViewModel
 {
     public class ViewModelMain : OnPropertyChangedClass
     {
-        private object content;
+        private object _content;
 
-        public ViewModelBattleClass ViewModelBattle { get; } = new ViewModelBattleClass();
+        public ViewModelBattleClass ViewModelBattle { get; }
         public ViewModelDataBaseClass ViewModelDataBase { get; }
 
-        public object Content { get => content; set { content = value; OnPropertyChanged(); } }
+        public object Content { get => _content; set { _content = value; OnPropertyChanged(); } }
 
         public ViewModelMain(Action exitApplication)
         {
-            content = ViewModelDataBase;
+            _content = ViewModelDataBase;
             ViewModelDataBase = new ViewModelDataBaseClass
                 (
                     StartMetod,
@@ -26,6 +26,16 @@ namespace InvasionViewModel
                     ExitMetod,
                     (p) => true
                 );
+            ViewModelBattle = new ViewModelBattleClass
+                (
+                    MainMetod,
+                    (p) => true
+                );
+        }
+
+        private void MainMetod(object parameter)
+        {
+            Content=ViewModelDataBase;
         }
 
         private void ExitMetod(object parameter)

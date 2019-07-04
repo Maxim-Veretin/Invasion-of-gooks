@@ -3,132 +3,127 @@
 
     public class ModelClass
     {
-        public Sky WarSky { get; }
+        public Sky WarSky { get; private set; }
 
-        public ModelClass(/*Grid scene*/)
+        //public ModelClass(/*Grid scene*/)
+        //{
+        //}
+
+        ////public bool SaveResult(DataGamer gamer)
+        ////{
+        ////    return true;
+        ////}
+
+        public void SetAction(ActionEnum direcion)
         {
-            WarSky = new Sky(new SkySetting()
+            switch (direcion)
             {
-                Width = 1360,
-                Height = 760,
-                GamerSpeed = 300,
-                GamerHeight = 75,
-                GamerWidth = 75,
-                EnemyWidth = 75,
-                EnemyHeight = 75,
-                EnemySpeed = 50,
-                EnemyBulletHeight = 7,
-                EnemyBulletWidth = 3,
-                EnemyBulletSpeed = 500,
-                EnemyRocketHeight = 20,
-                EnemyRocketWidth = 10,
-                EnemyRocketSpeed = 500,
-                GamerBulletHeight = 7,
-                GamerBulletWidth = 3,
-                GamerBulletSpeed = 1000,
-                GamerRocketHeight = 20,
-                GamerRocketWidth = 10,
-                GamerRocketSpeed = 700,
-                EnemyFrequency = 3,
-                EnemyFrequencyProjectile = 3,
-                EnemyShareRockets = 0.5,
-                GamerHealth = 10,
-                EnemyHealth = 3,
-                EnemyBossBulletHeight = 10,
-                EnemyBossBulletWidth = 6,
-                EnemyBossHealth = 30,
-                EnemyBossShareRockets = 0.5,
-                EnemyBossFrequencyProjectile = 2,
-                EnemyBossHeight = 300,
-                EnemyBossWidth = 300,
-                EnemyBossSpeed = 20
-            }/*, scene________*/);
-        }
-
-        public bool SaveResult(DataGamer gamer)
-        {
-            return true;
-        }
-
-        public void SetAction(DirecionEnum direcion)
-        {
-            switch(direcion)
-            {
-                case DirecionEnum.Up:
+                case ActionEnum.Up:
                     WarSky.Gamer.SpeedVertical = -500;
                     WarSky.Gamer.SpeedHorizontal = 0;
                     break;
 
-                case DirecionEnum.Right:
+                case ActionEnum.Right:
                     WarSky.Gamer.SpeedVertical = 0;
                     WarSky.Gamer.SpeedHorizontal = 500;
                     break;
 
-                case DirecionEnum.Down:
+                case ActionEnum.Down:
                     WarSky.Gamer.SpeedVertical = 500;
                     WarSky.Gamer.SpeedHorizontal = 0;
                     break;
 
-                case DirecionEnum.Left:
+                case ActionEnum.Left:
                     WarSky.Gamer.SpeedVertical = 0;
                     WarSky.Gamer.SpeedHorizontal = -500;
                     break;
 
-                case DirecionEnum.Stop:
+                case ActionEnum.Stop:
                     WarSky.Gamer.SpeedVertical = 0;
                     WarSky.Gamer.SpeedHorizontal = 0;
                     break;
 
-                case DirecionEnum.UpRight:
+                case ActionEnum.UpRight:
                     WarSky.Gamer.SpeedVertical = -200;
                     WarSky.Gamer.SpeedHorizontal = 200;
                     break;
 
-                case DirecionEnum.UpLeft:
+                case ActionEnum.UpLeft:
                     WarSky.Gamer.SpeedVertical = -200;
                     WarSky.Gamer.SpeedHorizontal = -200;
                     break;
 
-                case DirecionEnum.DownRight:
+                case ActionEnum.DownRight:
                     WarSky.Gamer.SpeedVertical = 200;
                     WarSky.Gamer.SpeedHorizontal = 200;
                     break;
 
-                case DirecionEnum.DownLeft:
+                case ActionEnum.DownLeft:
                     WarSky.Gamer.SpeedVertical = 200;
                     WarSky.Gamer.SpeedHorizontal = -200;
                     break;
 
-                case DirecionEnum.Pif:
+                case ActionEnum.Pif:
                     WarSky.GamerPifMethod();
                     break;
 
-                case DirecionEnum.Paf:
+                case ActionEnum.Paf:
                     WarSky.GamerPafMethod();
                     break;
             }
         }
 
-        public void PauseStart(bool start)
+        public void GamePause()
         {
-            if (start) WarSky.Continue();
-            else WarSky.Pause();
+            if (WarSky != null)
+                WarSky.Pause();
         }
-    }
-
-    public enum DirecionEnum
-    {
-        Up,
-        Down,
-        Left,
-        Right,
-        Stop,
-        UpRight,
-        UpLeft,
-        DownRight,
-        DownLeft,
-        Pif,
-        Paf,
-        Napalm
+        public void GameContinue()
+        {
+            if (WarSky != null)
+                WarSky.Continue();
+        }
+        public void GameBreak() { WarSky = null; }
+        public void GameStart()
+        {
+            WarSky = new Sky
+                (new SkySetting()
+                {
+                    Width = 1360,
+                    Height = 760,
+                    GamerSpeed = 300,
+                    GamerHeight = 75,
+                    GamerWidth = 75,
+                    EnemyWidth = 75,
+                    EnemyHeight = 75,
+                    EnemySpeed = 50,
+                    EnemyBulletHeight = 7,
+                    EnemyBulletWidth = 3,
+                    EnemyBulletSpeed = 500,
+                    EnemyRocketHeight = 20,
+                    EnemyRocketWidth = 10,
+                    EnemyRocketSpeed = 500,
+                    GamerBulletHeight = 7,
+                    GamerBulletWidth = 3,
+                    GamerBulletSpeed = 1000,
+                    GamerRocketHeight = 20,
+                    GamerRocketWidth = 10,
+                    GamerRocketSpeed = 700,
+                    EnemyFrequency = 3,
+                    EnemyFrequencyProjectile = 3,
+                    EnemyShareRockets = 0.5,
+                    GamerHealth = 10,
+                    EnemyHealth = 3,
+                    EnemyBossBulletHeight = 10,
+                    EnemyBossBulletWidth = 6,
+                    EnemyBossHealth = 30,
+                    EnemyBossShareRockets = 0.5,
+                    EnemyBossFrequencyProjectile = 2,
+                    EnemyBossHeight = 300,
+                    EnemyBossWidth = 300,
+                    EnemyBossSpeed = 20
+                }
+                );
+        }
     }
 }
