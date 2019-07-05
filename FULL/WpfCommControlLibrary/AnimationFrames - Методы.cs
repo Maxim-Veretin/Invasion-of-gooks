@@ -53,15 +53,15 @@ namespace WpfCommControlLibrary
             if (oldValue >= 0 && newValue < 0)
                 Action = AnimationFramesActionEnum.Stop;
 
-            if (newValue >= 0 && newValue < Frames.Length)
-                ImageFrameBrush.Viewbox = Frames[newValue];
+            if (newValue >= 0 && newValue < SourceFrames.Frames.Length)
+                ImageFrameBrush.Viewbox = SourceFrames.Frames[newValue];
         }
         /// <summary>Проверка нового значения текущего кадра</summary>
         /// <param name="newValue">Новое значение</param>
         /// <returns>Новое значение приведённое к допустимому диапазону</returns>
         private int CurrentFrameCoerceValueCallback(int newValue)
         {
-            if (newValue < -1 || Frames == null || Frames.Length < 1 || newValue >= Frames.Length)
+            if (newValue < -1 || SourceFrames?.Frames == null || SourceFrames.Frames.Length < 1 || newValue >= SourceFrames.Frames.Length)
                 return Replay ? 0 : -1;
             return newValue;
         }

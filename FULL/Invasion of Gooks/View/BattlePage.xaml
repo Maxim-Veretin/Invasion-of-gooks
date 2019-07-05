@@ -10,14 +10,15 @@
       xmlns:gif="http://wpfanimatedgif.codeplex.com"
       xmlns:model="clr-namespace:InvasionModel;assembly=InvasionModel"
       xmlns:viewModel ="clr-namespace:InvasionViewModel;assembly=InvasionViewModel"
+      xmlns:wpfLib="clr-namespace:WpfCommControlLibrary;assembly=WpfCommControlLibrary"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BattlePage"
       d:DataContext="{x:Type viewModel:ViewModelBattleClass}">
 
     <Page.Resources>
         <!--<viewmodel:ViewModelClass x:Key="ViewModel"/>-->
-        <BitmapImage x:Key="Explosion.Image" UriSource="/Invasion of Gooks;component/Resources/vz.png"/>
         <sys:Double x:Key="Explosion.Interval">50</sys:Double>
+        <BitmapImage x:Key="Explosion.Image" UriSource="/Invasion of Gooks;component/Resources/vz.png"/>
         <x:Array x:Key="Explosion.Frames" Type="{x:Type Rect}">
             <Rect X="0" Y="0" Width="380" Height="380"/>
             <Rect X="380" Y="0" Width="380" Height="380"/>
@@ -25,11 +26,14 @@
             <Rect X="1140" Y="0" Width="420" Height="380"/>
             <Rect X="1600" Y="0" Width="380" Height="380"/>
         </x:Array>
-        <commlibrary:IIfConverter x:Key="IIfConverter"/>
+        <wpfLib:ImageSourceFrames x:Key="Explosion.ImageFrames" 
+                                    Source="{StaticResource Explosion.Image}"
+                                    Frames="{StaticResource Explosion.Frames}"/>
+        <!--<commlibrary:IIfConverter x:Key="IIfConverter"/>
         <x:Array x:Key="IsStopIIfConverter" Type="{x:Type sys:Int32}">
             <sys:Int32>0</sys:Int32>
             <sys:Int32>1</sys:Int32>
-        </x:Array>
+        </x:Array>-->
         <viewModel:ViewModelStatic x:Key="ViewModelStatic"/>
         <commlibrary:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Page.Resources>
@@ -39,7 +43,7 @@
     <Viewbox >
         <Grid x:Name="scene" >
             <!--<TextBlock Text="{Binding IsPauseGame}" Panel.ZIndex="10" FontSize="50"/>-->
-            
+
             <local:PauseGameUC Panel.ZIndex="10" Visibility="{Binding IsPauseKey, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <local:ExitBattleUC VerticalAlignment="Center" HorizontalAlignment="Center" Panel.ZIndex="10"
                                 Visibility="{Binding IsShowExitGameMenu, Converter={StaticResource BooleanToVisibilityConverter}}"/>
@@ -81,13 +85,11 @@
                             </Image.RenderTransform>
                         </Image>
                     </DataTemplate>
-                    <!--<DataTemplate DataType="{x:Type model:ExplosionClass}">
-                        <Image Width="{Binding Width}" Height="{Binding Height}" Source="/Invasion of Gooks;component/Resources/rocket.png" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <RotateTransform Angle="{Binding Angle}"/>
-                            </Image.RenderTransform>
-                        </Image>
-                    </DataTemplate>-->
+                    <DataTemplate DataType="{x:Type model:ExplosionClass}">
+                        <wpfLib:AnimationFrames Width="{Binding Width}" Height="{Binding Height}"
+                                Interval="1000"  
+                                Action="Start"  VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    </DataTemplate>
                 </ItemsControl.Resources>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

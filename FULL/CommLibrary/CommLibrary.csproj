@@ -51,7 +51,7 @@
     <Compile Include="CompareConverter.cs" />
     <Compile Include="DebugConverter.cs" />
     <Compile Include="GetTypeConverter.cs" />
-    <Compile Include="Icopy.cs" />
+    <Compile Include="ICopy.cs" />
     <Compile Include="IIfConverter.cs" />
     <Compile Include="IsNullOrWhiteSpaceConverter.cs" />
     <Compile Include="OnPropertyChangedClass.cs" />

@@ -19,6 +19,9 @@
             <Rect X="760" Y="0" Width="380" Height="380"/>
             <Rect X="1140" Y="0" Width="420" Height="380"/>
         </x:Array>
+        <wpfLib:ImageSourceFrames x:Key="Explosion.ImageFrames" 
+                                    Source="{StaticResource Explosion.Image}"
+                                    Frames="{StaticResource Explosion.Frames}"/>
         <commlibrary:IIfConverter x:Key="IIfConverter"/>
         <x:Array x:Key="IsStopIIfConverter" Type="{x:Type sys:Int32}">
             <sys:Int32>0</sys:Int32>
@@ -27,13 +30,13 @@
         <commlibrary:GetTypeConverter x:Key="GetTypeConverter"/>
     </Window.Resources>
     <Grid>
-        <wpfLib:AnimationFrames x:Name="animationFrames" ImageFrames="{Binding Mode=OneWay, Source={StaticResource Explosion.Image}}" 
-                                Frames="{Binding Mode=OneWay, Source={StaticResource Explosion.Frames}}" 
+
+        <wpfLib:AnimationFrames x:Name="animationFrames" 
+                                SourceFrames="{Binding Mode=OneWay, Source={StaticResource Explosion.ImageFrames}}"
                                 Interval="1000" 
-                                Action="Start" Replay="True" Width="100" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <wpfLib:AnimationFrames ImageFrames="{Binding Mode=OneWay, Source={StaticResource Explosion.Image}}" 
-                                Frames="{Binding Mode=OneWay, Source={StaticResource Explosion.Frames}}" CurrentFrame="2"
-                                Interval="{Binding Mode=OneWay, Source={StaticResource Explosion.Interval}}" 
+                                Action="Start" Replay="True" Width="100" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <wpfLib:AnimationFrames Interval="{Binding Mode=OneWay, Source={StaticResource Explosion.Interval}}" 
+                                SourceFrames="{Binding Mode=OneWay, Source={StaticResource Explosion.ImageFrames}}"
                                 Action="Start" Replay="True" Width="100" Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
         <!--<StackPanel DataContext="{Binding ElementName=animationFrames, Mode=OneWay}">
                 <Image Height="100" Source="{Binding ImageFrames, Mode=OneWay}"/>

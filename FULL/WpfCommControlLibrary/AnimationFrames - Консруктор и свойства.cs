@@ -29,6 +29,11 @@ namespace WpfCommControlLibrary
             };
             Background = ImageFrameBrush;
             timer.Tick += Timer_Tick;
+
+            Binding bind = new Binding(nameof(SourceFrames)+"."+nameof(SourceFrames.Source)) { Source = this };
+
+            SetBinding(ImageFramesProperty, bind);
+
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -40,21 +45,35 @@ namespace WpfCommControlLibrary
         }
 
         /// <summary>Изображение для раскадровки</summary>
-        public ImageSource ImageFrames
+        private ImageSource ImageFrames
         {
             get { return (ImageSource)GetValue(ImageFramesProperty); }
             set { SetValue(ImageFramesProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ImageFrames.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ImageFramesProperty =
+        private static readonly DependencyProperty ImageFramesProperty =
             DependencyProperty.Register(nameof(ImageFrames), typeof(ImageSource), typeof(AnimationFrames),
-                new FrameworkPropertyMetadata(null, (PropertyChangedCallback)ImageFramesChangedCallback));
+                new PropertyMetadata(null, (PropertyChangedCallback)ImageFramesChangedCallback));
 
         private static void ImageFramesChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((AnimationFrames)d).ImageFrameBrush.ImageSource = (ImageSource)e.NewValue;
         }
+
+
+
+        public ImageSourceFrames SourceFrames
+        {
+            get { return (ImageSourceFrames)GetValue(SourceFramesProperty); }
+            set { SetValue(SourceFramesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SourceFrames.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SourceFramesProperty =
+            DependencyProperty.Register(nameof(SourceFrames), typeof(ImageSourceFrames), typeof(AnimationFrames), new PropertyMetadata(null));
+
+
 
 
         /// <summary>Интервал между кадрами в миллисекундах</summary>
@@ -67,24 +86,13 @@ namespace WpfCommControlLibrary
         // Using a DependencyProperty as the backing store for Interval.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IntervalProperty =
             DependencyProperty.Register(nameof(Interval), typeof(uint), typeof(AnimationFrames),
-                new FrameworkPropertyMetadata(0u, (PropertyChangedCallback)IntervalChangedCallback));
+                new PropertyMetadata(0u, (PropertyChangedCallback)IntervalChangedCallback));
 
         private static void IntervalChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((AnimationFrames)d).timer.Interval = TimeSpan.FromMilliseconds((uint)e.NewValue);
         }
 
-
-        /// <summary>Последовательность кадров в изображении</summary>
-        public Rect[] Frames
-        {
-            get { return (Rect[])GetValue(FramesProperty); }
-            set { SetValue(FramesProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Frames.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty FramesProperty =
-            DependencyProperty.Register(nameof(Frames), typeof(Rect[]), typeof(AnimationFrames), new PropertyMetadata(null));
         //new FrameworkPropertyMetadata(null, FramesChangedCallback));
 
         //private static void FramesChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -128,7 +136,7 @@ namespace WpfCommControlLibrary
             if (((AnimationFrames)d).ActionCallback == null)
                 return baseValue;
             else
-                return ((AnimationFrames)d).ActionCallback((AnimationFramesActionEnum)baseValue , ((AnimationFrames)d).Action);
+                return ((AnimationFrames)d).ActionCallback((AnimationFramesActionEnum)baseValue, ((AnimationFrames)d).Action);
         }
 
         private static void ActionChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
