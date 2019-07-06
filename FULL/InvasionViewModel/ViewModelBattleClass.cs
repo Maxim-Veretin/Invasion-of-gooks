@@ -22,7 +22,7 @@ namespace InvasionViewModel
         private readonly ModelClass model = new ModelClass();
 
         public ObservableCollection<UFOClass> UFOitems { get => _uFOitems; private set { _uFOitems = value; OnPropertyChanged(); } }
-        //public GamerClass Gamer { get => _gamer; private set { _gamer = value; OnPropertyChanged(); } }
+        public GamerClass Gamer { get => _gamer; private set { _gamer = value; OnPropertyChanged(); } }
 
         //public DataGamer dataGamer;
 
@@ -191,7 +191,7 @@ namespace InvasionViewModel
                 case KeyControl.DownRight:
                 case KeyControl.DownLeft:
                 case KeyControl.Pif:
-                    //case KeyControl Paf:
+                case KeyControl.Paf:
                     model.SetAction((ActionEnum)action);
                     break;
             }

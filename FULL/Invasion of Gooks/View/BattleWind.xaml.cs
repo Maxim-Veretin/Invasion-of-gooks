@@ -69,7 +69,7 @@ namespace Invasion_of_Gooks.View
             //================================================!!!=================
             //viewModel.own = this;
 
-            viewModel.warSky.ExplosionEvent += WarSky_ExplosionEvent;
+            //viewModel.warSky.ExplosionEvent += WarSky_ExplosionEvent;
 
             //полyчение изображения из ресyрсов окна
             ExplosionImage = (BitmapImage)Resources["Explosion.Image"];

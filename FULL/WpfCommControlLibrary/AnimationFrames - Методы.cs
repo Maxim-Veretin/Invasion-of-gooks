@@ -33,7 +33,9 @@ namespace WpfCommControlLibrary
                     break;
                 case AnimationFramesActionEnum.Start:
                     timer.Stop();
-                    CurrentFrame = 0;
+
+                    CurrentFrame = (isStarted = (SourceFrames == null)) ? -1 : 0;
+
                     Action = AnimationFramesActionEnum.Visible;
                     Action = AnimationFramesActionEnum.Play;
                     break;
@@ -44,6 +46,8 @@ namespace WpfCommControlLibrary
                     break;
             }
         }
+
+        private bool isStarted;
 
         /// <summary>Установка заданного кадра</summary>
         /// <param name="newValue">Номер устанавливаемого кадра</param>

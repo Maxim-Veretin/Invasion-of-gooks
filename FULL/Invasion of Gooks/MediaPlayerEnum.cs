@@ -69,6 +69,8 @@ namespace Invasion_of_Gooks
            (MediaPlayerEnum.SingleShot, "singleShot.wav"),
            (MediaPlayerEnum.RideOfTheValkyries, "rideOfTheValkyries.wav"),
            (MediaPlayerEnum.Propeller1, "propeller1.wav"),
+           (MediaPlayerEnum.Rocket, "rocket.wav"),
+
         }
         .ToDictionary(item => item.player, item => new PlayersStruct(item.uri));
         //public static IDictionary<MediaPlayerEnum, bool> PlayersPlay = new Dictionary<MediaPlayerEnum, bool>();

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Collections.Immutable;
 
 namespace InvasionViewModel
 {
@@ -24,6 +25,7 @@ namespace InvasionViewModel
         {
             return parameter is Key;
         }
+
 
         private void KeyMetod(object parameter)
         {
@@ -90,6 +92,21 @@ namespace InvasionViewModel
                     case Key.A:
                         KeyUser(KeyControl.DownLeft);
                         break;
+
+                    //если нажата клавиша Z, то применяется способность и вызывается её анимация
+                    case Key.Z:
+                        KeyUser(KeyControl.Pif);
+                        break;
+
+                    //если нажата клавиша X, то применяется способность и вызывается её анимация
+                    case Key.X:
+                        KeyUser(KeyControl.Paf);
+                        break;
+
+                    //если нажата клавиша C, то применяется способность и вызывается её анимация
+                    case Key.C:
+                        KeyUser(KeyControl.Napalm);
+                        break;
                 }
             }
             else if (parameter == null)
@@ -142,19 +159,19 @@ namespace InvasionViewModel
             {
                 warSky.SoundEvent -= WarSky_SoundEvent;
                 warSky.EndGameEvent -= WarSky_EndGameEvent;
-                warSky.ExplosionEvent -= WarSky_ExplosionEvent;
+                //warSky.ExplosionEvent -= WarSky_ExplosionEvent;
             }
             model.GameStart();
             warSky = model.WarSky;
 
             UFOitems = warSky.UFOitems;
-            //Gamer = warSky.Gamer;
+            Gamer = warSky.Gamer;
             SkyWidth = warSky.Width;
             SkyHeight = warSky.Heidht;
 
             warSky.SoundEvent += WarSky_SoundEvent;
             warSky.EndGameEvent += WarSky_EndGameEvent;
-            warSky.ExplosionEvent += WarSky_ExplosionEvent;
+            //warSky.ExplosionEvent += WarSky_ExplosionEvent;
         }
         public void BreakGame()
         {

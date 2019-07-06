@@ -11,12 +11,12 @@ namespace InvasionModel
         private double _speedVertical;
         //private bool _isGotShot;
         private double _width;
-        private double _heidht;
+        private double _height;
 
         /// <summary>Ширина</summary>
         public double Width { get => _width; set { _width = value; OnPropertyChanged(); } }
         /// <summary>Высота</summary>
-        public double Heidht { get => _heidht; set { _heidht = value; OnPropertyChanged(); } }
+        public double Height { get => _height; set { _height = value; OnPropertyChanged(); } }
         /// <summary>Смещение сверху</summary>
         public double Top { get => _top; set { _top = value; OnPropertyChanged(); } }
         /// <summary>Смещение слева</summary>
@@ -30,12 +30,12 @@ namespace InvasionModel
         public bool Intersection(UFOClass ufo)
         {
             double a_y = Top;
-            double a_y1 = Top + Heidht;
+            double a_y1 = Top + Height;
             double a_x = Left;
             double a_x1 = Left + Width;
 
             double b_y = ufo.Top;
-            double b_y1 = ufo.Top + ufo.Heidht;
+            double b_y1 = ufo.Top + ufo.Height;
             double b_x = ufo.Left;
             double b_x1 = ufo.Left + ufo.Width;
 
@@ -74,7 +74,7 @@ namespace InvasionModel
         public void CopyTo(UFOClass other)
         {
             other.Width = Width;
-            other.Heidht = Heidht;
+            other.Height = Height;
             //IsGotShot = IsGotShot;
             other.Left = Left;
             other.SpeedHorizontal = SpeedHorizontal;
@@ -85,7 +85,7 @@ namespace InvasionModel
         public void CopyFrom(UFOClass other)
         {
             Width = other.Width;
-            Heidht = other.Heidht;
+            Height = other.Height;
             //IsGotShot = IsGotShot;
             Left = other.Left;
             SpeedHorizontal = other.SpeedHorizontal;
@@ -100,7 +100,7 @@ namespace InvasionModel
             return new T1()
             {
                 Width = Width,
-                Heidht = Heidht,
+                Height = Height,
                 //IsGotShot = IsGotShot,
                 Left = Left,
                 SpeedHorizontal = SpeedHorizontal,
@@ -112,7 +112,7 @@ namespace InvasionModel
 
     public class ExplosionClass : UFOClass
     {
-        private bool _isRemove = true;
+        private bool _isRemove = false;
         /// <summary>Элементы с установленным свойством должны быть удалены</summary>
         public bool IsRemove { get => _isRemove; private set { _isRemove = value; OnPropertyChanged(); } }
         public void Remove() => IsRemove = true;

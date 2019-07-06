@@ -42,7 +42,7 @@ namespace InvasionModel
         /// <summary>Событие конец игры</summary>
         public event EndGameHandler EndGameEvent;
 
-        public event ExplosionHandler ExplosionEvent;
+        //public event ExplosionHandler ExplosionEvent;
 
         /// <summary>Вспомогательный метод для вызова события конец игры</summary>
         private void OnEndGame(EndGameEnum endGame)
@@ -51,10 +51,10 @@ namespace InvasionModel
             EndGameEvent?.Invoke(this, endGame);
         }
 
-        private void OnExplosion(double top, double left, double width, double height)
-        {
-            ExplosionEvent?.Invoke(this, top, left, width, height);
-        }
+        //private void OnExplosion(double top, double left, double width, double height)
+        //{
+        //    ExplosionEvent?.Invoke(this, top, left, width, height);
+        //}
 
         /// <summary>Ширина неба</summary>
         public double Width { get; }
@@ -100,7 +100,7 @@ namespace InvasionModel
             Gamer = new GamerClass()
             {
                 Width = Setting.GamerWidth,
-                Heidht = Setting.GamerHeight,
+                Height = Setting.GamerHeight,
                 SpeedVertical = 0,
                 SpeedHorizontal = 0,
                 Left = Setting.Width * .5,
@@ -109,6 +109,7 @@ namespace InvasionModel
                 FullHealth = Setting.GamerHealth
             };
             UFOitems.Add(Gamer);
+            UFOitems.Add(new ExplosionClass() {Width=Width, Height=Heidht });
 
             timer.Interval = TimeSpan.FromMilliseconds(10);
             timer.Tick += Timer_Tick;
@@ -232,7 +233,7 @@ namespace InvasionModel
                     {
                         Frags++;
                         OnSound(SoundEnum.enemyDie);
-                        OnExplosion(enemy.Top, enemy.Left, enemy.Width, enemy.Heidht);
+                        //OnExplosion(enemy.Top, enemy.Left, enemy.Width, enemy.Heidht);
                         if (enemy is EnemyBossClass)
                         {
                             scoreSky += 200;
@@ -252,6 +253,7 @@ namespace InvasionModel
                         ExplosionClass explosion = enemy.Copy<ExplosionClass>();
                         explosion.SpeedHorizontal = 0;
                         explosion.SpeedVertical = 0;
+                        
                         UFOitems.Add(explosion);
                         //if (bossDie == true)
                         //    OnEndGame(EndGameEnum.Win);
@@ -292,18 +294,18 @@ namespace InvasionModel
                     projectile = new BulletEnemyClass()
                     {
                         Width = Setting.EnemyBulletWidth,
-                        Heidht = Setting.EnemyBulletHeight,
+                        Height = Setting.EnemyBulletHeight,
                         Left = enemy.Left + enemy.Width * .5,
-                        Top = enemy.Top + enemy.Heidht,
+                        Top = enemy.Top + enemy.Height,
                         SpeedVertical = Setting.EnemyBulletSpeed
                     };
                 }
                 else
                 {
                     // Выстрел ракетой
-                    double rTop = enemy.Top + enemy.Heidht;
+                    double rTop = enemy.Top + enemy.Height;
                     double rLeft = enemy.Left + enemy.Width * .5;
-                    double dTop = (Gamer.Top + Gamer.Heidht * .5) - rTop;
+                    double dTop = (Gamer.Top + Gamer.Height * .5) - rTop;
                     double dLeft = (Gamer.Left + Gamer.Width * .5) - rLeft;
                     double dLenght = Math.Sqrt(dTop * dTop + dLeft * dLeft);
                     double rAngle = dLeft > dTop ? Math.Atan(dTop / dLeft) : Math.PI * .5 - Math.Atan(dLeft / dTop);
@@ -322,7 +324,7 @@ namespace InvasionModel
                     projectile = new RocketEnemyClass()
                     {
                         Width = Setting.EnemyRocketWidth,
-                        Heidht = Setting.EnemyRocketHeight,
+                        Height = Setting.EnemyRocketHeight,
                         Left = rLeft,
                         Top = rTop,
                         SpeedVertical = rSpeedV,
@@ -344,7 +346,7 @@ namespace InvasionModel
                 EnemyClass enemy = new EnemyClass()
                 {
                     Width = Setting.EnemyWidth,
-                    Heidht = Setting.EnemyHeight,
+                    Height = Setting.EnemyHeight,
                     Top = 0,
                     Left = random.Next((int)(Width - Gamer.Width)),
                     SpeedVertical = Setting.EnemySpeed,
@@ -363,7 +365,7 @@ namespace InvasionModel
             EnemyBossClass boss = new EnemyBossClass()
             {
                 Width = Setting.EnemyBossWidth,
-                Heidht = Setting.EnemyBossHeight,
+                Height = Setting.EnemyBossHeight,
                 Top = 0,
                 Left = Setting.Width * .3,
                 SpeedVertical = Setting.EnemyBossSpeed,
@@ -392,8 +394,8 @@ namespace InvasionModel
                 {
                     if (_Top < 0)
                         _Top = 0;
-                    else if (_Top > Heidht - Gamer.Heidht)
-                        _Top = Heidht - Gamer.Heidht;
+                    else if (_Top > Heidht - Gamer.Height)
+                        _Top = Heidht - Gamer.Height;
 
                     if (_Left < 0)
                         _Left = 0;
@@ -428,7 +430,7 @@ namespace InvasionModel
             BulletGamerClass bulletgmr = new BulletGamerClass()
             {
                 Width = Setting.GamerBulletWidth,
-                Heidht = Setting.GamerBulletHeight,
+                Height = Setting.GamerBulletHeight,
                 Left = Gamer.Left + Gamer.Width * .5,
                 Top = Gamer.Top + Setting.GamerBulletHeight,
                 SpeedVertical = -Setting.GamerBulletSpeed
@@ -451,7 +453,7 @@ namespace InvasionModel
 
             double rTop = Gamer.Top - Setting.GamerRocketHeight;
             double rLeft = Gamer.Left + Gamer.Width * .5;
-            double dTop = (FirstEnemy.Top + FirstEnemy.Heidht * .5) - rTop + Setting.EnemyHeight * .5;
+            double dTop = (FirstEnemy.Top + FirstEnemy.Height * .5) - rTop + Setting.EnemyHeight * .5;
             double dLeft = (FirstEnemy.Left + FirstEnemy.Width * .5) - rLeft;
             double dLenght = Math.Sqrt(dTop * dTop + dLeft * dLeft);
             double rAngle = dLeft > dTop ? Math.Atan(dTop / dLeft) : Math.PI * .5 - Math.Atan(dLeft / dTop);
@@ -471,7 +473,7 @@ namespace InvasionModel
             RocketGamerClass rocketgmr = new RocketGamerClass()
             {
                 Width = Setting.GamerRocketWidth,
-                Heidht = Setting.GamerRocketHeight,
+                Height = Setting.GamerRocketHeight,
                 Left = rLeft,
                 Top = rTop,
                 SpeedVertical = rSpeedV,

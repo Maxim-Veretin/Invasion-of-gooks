@@ -87,7 +87,7 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type model:ExplosionClass}">
                         <wpfLib:AnimationFrames Width="{Binding Width}" Height="{Binding Height}"
-                                Interval="1000"  
+                                Interval="50"  SourceFrames="{StaticResource Explosion.ImageFrames}"
                                 Action="Start"  VerticalAlignment="Top" HorizontalAlignment="Left"/>
                     </DataTemplate>
                 </ItemsControl.Resources>

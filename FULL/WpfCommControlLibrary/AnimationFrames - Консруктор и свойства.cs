@@ -71,7 +71,14 @@ namespace WpfCommControlLibrary
 
         // Using a DependencyProperty as the backing store for SourceFrames.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SourceFramesProperty =
-            DependencyProperty.Register(nameof(SourceFrames), typeof(ImageSourceFrames), typeof(AnimationFrames), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(SourceFrames), typeof(ImageSourceFrames), typeof(AnimationFrames), new PropertyMetadata(null, 
+                (PropertyChangedCallback)SourceFramesChangedCallback));
+
+        private static void SourceFramesChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (((AnimationFrames)d).isStarted)
+                ((AnimationFrames)d).Action= AnimationFramesActionEnum.Start;
+        }
 
 
 
