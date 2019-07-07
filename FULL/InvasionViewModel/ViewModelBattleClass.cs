@@ -35,11 +35,11 @@ namespace InvasionViewModel
         public MediaPlayer pleer = new MediaPlayer();
         public MediaPlayer pleer1 = new MediaPlayer();
         public MediaPlayer pleer2 = new MediaPlayer();
-        private bool _isStop;
+        //private bool _isStop;
         private ObservableCollection<UFOClass> _uFOitems;
         private GamerClass _gamer;
 
-        public bool IsStop { get => _isStop; private set { _isStop = value; OnPropertyChanged(); } }
+        //public bool IsStop { get => _isStop; private set { _isStop = value; OnPropertyChanged(); } }
         /// <summary>Метод разрешающий выполнение команды</summary>
         /// <param name="parameter"></param>
         /// <return><see langword="true"/> если команда разрешена</returns>
@@ -95,38 +95,40 @@ namespace InvasionViewModel
 
         private void WarSky_EndGameEvent(Sky sky, EndGameEnum endGame)
         {
-            model.GamePause();
+            //model.GamePause();
+            //warSky.Pause();
+            IsEndGame = true;
+            IsVictory = endGame == EndGameEnum.Win;
             //gamePlayer.Close();
             //gamePlayerPropellers.Close();
             //DtGamer.Scr = warSky.scoreSky;
-            IsStop = true;
+            //IsStop = true;
 
-            switch (endGame)
-            {
-                case EndGameEnum.Losing:
-                    //SaveResoult();
-                    //EndGame endgame = new EndGame();
-                    //endgame.ShowDialog();
-                    //own.Owner.Show();
-                    //own.Close();
-                    //ResetValue();
-                    //warSky.IsEndGame = false;
-                    break;
+            //switch (endGame)
+            //{
+            //    case EndGameEnum.Losing:
+            //        //SaveResoult();
+            //        //EndGame endgame = new EndGame();
+            //        //endgame.ShowDialog();
+            //        //own.Owner.Show();
+            //        //own.Close();
+            //        //ResetValue();
+            //        //warSky.IsEndGame = false;
+            //        break;
 
-                case EndGameEnum.Win:
+            //    case EndGameEnum.Win:
 
-                    SaveResoult();
-                    //WinGame winGame = new WinGame();
-                    //winGame.ShowDialog();
-                    //================================================!!!=================
-                    //own.Owner.Show();
-                    //own.Close();
-                    //ResetValue();
-                    //warSky.IsEndGame = false;
-                    break;
-            }
+            //        SaveResoult();
+            //        //WinGame winGame = new WinGame();
+            //        //winGame.ShowDialog();
+            //        //================================================!!!=================
+            //        //own.Owner.Show();
+            //        //own.Close();
+            //        //ResetValue();
+            //        //warSky.IsEndGame = false;
+            //        break;
+            //}
 
-            warSky.Pause();
         }
 
         //private readonly Dictionary<SoundEnum, MediaPlayer> Pleers = new Dictionary<SoundEnum, MediaPlayer>();
@@ -173,11 +175,11 @@ namespace InvasionViewModel
             switch (action)
             {
                 case KeyControl.Pause:
-                    IsStop = true;
+                    //IsStop = true;
                     model.GamePause();
                     break;
                 case KeyControl.Continue:
-                    IsStop = false;
+                    //IsStop = false;
                     model.GameContinue();
                     break;
 

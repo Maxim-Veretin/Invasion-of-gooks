@@ -11,6 +11,7 @@ namespace InvasionViewModel
     {
         private bool _isShowExitGameMenu = false;
         private bool _isPauseKey = true;
+        private bool _isEndGame;
 
         public bool IsShowExitGameMenu
         {
@@ -37,13 +38,23 @@ namespace InvasionViewModel
 
         private void PauseGame()
         {
-            if (ViewModelGameStaticProperty.SingularExemplar.IsPause = IsPauseKey || IsShowExitGameMenu)
+            if (ViewModelGameStaticProperty.SingularExemplar.IsPause = IsPauseKey || IsShowExitGameMenu || IsEndGame)
                 model.GamePause();
             else
                 model.GameContinue();
 
         }
 
-        //public bool IsPauseGame => IsPauseKey || IsShowExitGameMenu;
+        public bool IsEndGame
+        {
+            get => _isEndGame;
+            private set
+            {
+                _isEndGame = value;
+                OnPropertyChanged();
+                PauseGame();
+            }
+            //public bool IsPauseGame => IsPauseKey || IsShowExitGameMenu;
+        }
     }
 }

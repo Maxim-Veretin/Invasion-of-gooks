@@ -43,7 +43,7 @@
     <Viewbox >
         <Grid x:Name="scene" >
             <!--<TextBlock Text="{Binding IsPauseGame}" Panel.ZIndex="10" FontSize="50"/>-->
-
+            <local:WinGameUC Panel.ZIndex="10"/>
             <local:PauseGameUC Panel.ZIndex="10" Visibility="{Binding IsPauseKey, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <local:ExitBattleUC VerticalAlignment="Center" HorizontalAlignment="Center" Panel.ZIndex="10"
                                 Visibility="{Binding IsShowExitGameMenu, Converter={StaticResource BooleanToVisibilityConverter}}"/>
@@ -106,9 +106,9 @@
                     </Style>
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
-            <Canvas x:Name="ExplosionCanvas">
-                <!--<Border BorderBrush="Red" BorderThickness="1" Width="100" Height="100"/>-->
-            </Canvas>
+            <!--<Canvas x:Name="ExplosionCanvas">
+                --><!--<Border BorderBrush="Red" BorderThickness="1" Width="100" Height="100"/>--><!--
+            </Canvas>-->
         </Grid>
 
     </Viewbox>

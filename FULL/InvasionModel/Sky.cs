@@ -250,11 +250,16 @@ namespace InvasionModel
                             //UFOitems.Remove(enemy);
                         }
                         UFOitems.Remove(enemy);
-                        ExplosionClass explosion = enemy.Copy<ExplosionClass>();
-                        explosion.SpeedHorizontal = 0;
-                        explosion.SpeedVertical = 0;
-                        
-                        UFOitems.Add(explosion);
+                        //if (enemy is EnemyBossClass)
+                        //    OnEndGame(EndGameEnum.Win);
+                        //else
+                        //{
+                            ExplosionClass explosion = enemy.Copy<ExplosionClass>();
+                            explosion.SpeedHorizontal = 0;
+                            explosion.SpeedVertical = 0;
+
+                            UFOitems.Add(explosion);
+                        //}
                         //if (bossDie == true)
                         //    OnEndGame(EndGameEnum.Win);
                         //else if((bossDie==false)&&(int.Parse((DateTime.Now-spawnBooss).Seconds.ToString())==41))

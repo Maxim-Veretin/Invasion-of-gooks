@@ -1,5 +1,4 @@
-﻿using InvasionViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,17 +16,13 @@ using System.Windows.Shapes;
 namespace Invasion_of_Gooks.View
 {
     /// <summary>
-    /// Логика взаимодействия для MainPage.xaml
+    /// Логика взаимодействия для WinGameUC.xaml
     /// </summary>
-    public partial class StartPage : Page
+    public partial class WinGameUC : Viewbox
     {
-        ViewModelDataBaseClass ViewModel { get; }
-        public StartPage(ViewModelDataBaseClass viewModel)
+        public WinGameUC()
         {
             InitializeComponent();
-            ViewModel = viewModel;
-            DataContext = ViewModel;
         }
-
     }
 }

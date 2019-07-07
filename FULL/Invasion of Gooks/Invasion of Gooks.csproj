@@ -123,6 +123,9 @@
     <Compile Include="View\WinGame.xaml.cs">
       <DependentUpon>WinGame.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\WinGameUC.xaml.cs">
+      <DependentUpon>WinGameUC.xaml</DependentUpon>
+    </Compile>
     <Page Include="Example.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -172,6 +175,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\WinGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\WinGameUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

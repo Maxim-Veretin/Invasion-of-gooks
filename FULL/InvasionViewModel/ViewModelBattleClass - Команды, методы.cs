@@ -11,7 +11,7 @@ using System.Collections.Immutable;
 
 namespace InvasionViewModel
 {
-    public partial class ViewModelBattleClass : OnPropertyChangedClass
+    public partial class ViewModelBattleClass : OnPropertyChangedClass, IEndGame
     {
         private RelayCommand _keyCommand;
         private RelayCommand _exitBattleCommand;
@@ -117,6 +117,8 @@ namespace InvasionViewModel
 
         public RelayCommand ExitGameCommand;
         private RelayCommand _exitGameMenuCommand;
+        private RelayCommand _startGameCommand;
+        private bool _isVictory;
 
         public RelayCommand ExitBattleCommand => _exitBattleCommand ?? (_exitBattleCommand = new RelayCommand(ExitBattleMetod, ExitBattleCanMetod));
 
@@ -151,10 +153,15 @@ namespace InvasionViewModel
         /// <param name="sound"></param>
         private void OnSound(SoundEnum sound) => SoundEvent?.Invoke(this, sound);
 
+        public RelayCommand StartGameCommand => _startGameCommand ?? (_startGameCommand = new RelayCommand(_ => StartGame()));
+
+        public bool IsVictory { get => _isVictory; private set { _isVictory = value; OnPropertyChanged(); } }
+
         public void StartGame()
         {
             IsPauseKey = true;
             IsShowExitGameMenu = false;
+            IsEndGame = false;
             if (warSky != null)
             {
                 warSky.SoundEvent -= WarSky_SoundEvent;
@@ -178,101 +185,101 @@ namespace InvasionViewModel
             model.GameBreak();
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                //если нажата стрелочка вверх, то коордианта вертолётика смещается вверх
-                case Key.Up:
-                    KeyUser(KeyControl.Up);
-                    break;
+        //private void Window_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    switch (e.Key)
+        //    {
+        //        //если нажата стрелочка вверх, то коордианта вертолётика смещается вверх
+        //        case Key.Up:
+        //            KeyUser(KeyControl.Up);
+        //            break;
 
-                //если нажата стрелочка вправо, то коордианта вертолётика смещается вправо
-                case Key.Right:
-                    KeyUser(KeyControl.Right);
-                    break;
+        //        //если нажата стрелочка вправо, то коордианта вертолётика смещается вправо
+        //        case Key.Right:
+        //            KeyUser(KeyControl.Right);
+        //            break;
 
-                //если нажата стрелочка вниз, то коордианта вертолётика смещается вниз
-                case Key.Down:
-                    KeyUser(KeyControl.Down);
-                    break;
+        //        //если нажата стрелочка вниз, то коордианта вертолётика смещается вниз
+        //        case Key.Down:
+        //            KeyUser(KeyControl.Down);
+        //            break;
 
-                //если нажата стрелочка влево, то коордианта вертолётика смещается влево
-                case Key.Left:
-                    KeyUser(KeyControl.Left);
-                    break;
+        //        //если нажата стрелочка влево, то коордианта вертолётика смещается влево
+        //        case Key.Left:
+        //            KeyUser(KeyControl.Left);
+        //            break;
 
-                //если нажата W, то вертолётик смещается вверх-вправо
-                case Key.W:
-                    KeyUser(KeyControl.UpRight);
-                    break;
+        //        //если нажата W, то вертолётик смещается вверх-вправо
+        //        case Key.W:
+        //            KeyUser(KeyControl.UpRight);
+        //            break;
 
-                //если нажата Q, то вертолётик смещается вверх-влево
-                case Key.Q:
-                    KeyUser(KeyControl.UpLeft);
-                    break;
+        //        //если нажата Q, то вертолётик смещается вверх-влево
+        //        case Key.Q:
+        //            KeyUser(KeyControl.UpLeft);
+        //            break;
 
-                //если нажата S, то вертолётик смещается вниз-вправо
-                case Key.S:
-                    KeyUser(KeyControl.DownRight);
-                    break;
+        //        //если нажата S, то вертолётик смещается вниз-вправо
+        //        case Key.S:
+        //            KeyUser(KeyControl.DownRight);
+        //            break;
 
-                //если нажата A, то вертолётик смещается вниз-влево
-                case Key.A:
-                    KeyUser(KeyControl.DownLeft);
-                    break;
+        //        //если нажата A, то вертолётик смещается вниз-влево
+        //        case Key.A:
+        //            KeyUser(KeyControl.DownLeft);
+        //            break;
 
-                ////если нажата клавиша Escape, то вызывается меню паузы
-                //case Key.Escape:
-                //    viewModel.KeyUser(KeyControl.Pause);
-                //    PauseMenu pause = new PauseMenu(/*this*/);
+        //        ////если нажата клавиша Escape, то вызывается меню паузы
+        //        //case Key.Escape:
+        //        //    viewModel.KeyUser(KeyControl.Pause);
+        //        //    PauseMenu pause = new PauseMenu(/*this*/);
 
-                //    if (pause.ShowDialog() == true)
-                //    {
+        //        //    if (pause.ShowDialog() == true)
+        //        //    {
 
-                //    }
-                //    else
-                //    {
-                //        viewModel.KeyUser(KeyControl.Continue);
-                //    }
-                //    break;
-                //case Key.Space:
-                //    viewModel.KeyUser(KeyControl.Continue);
-                //    break;
+        //        //    }
+        //        //    else
+        //        //    {
+        //        //        viewModel.KeyUser(KeyControl.Continue);
+        //        //    }
+        //        //    break;
+        //        //case Key.Space:
+        //        //    viewModel.KeyUser(KeyControl.Continue);
+        //        //    break;
 
-                //если нажата клавиша Z, то применяется способность и вызывается её анимация
-                case Key.Z:
-                    KeyUser(KeyControl.Pif);
-                    break;
+        //        //если нажата клавиша Z, то применяется способность и вызывается её анимация
+        //        case Key.Z:
+        //            KeyUser(KeyControl.Pif);
+        //            break;
 
-                //если нажата клавиша X, то применяется способность и вызывается её анимация
-                case Key.X:
-                    KeyUser(KeyControl.Paf);
-                    break;
+        //        //если нажата клавиша X, то применяется способность и вызывается её анимация
+        //        case Key.X:
+        //            KeyUser(KeyControl.Paf);
+        //            break;
 
-                //если нажата клавиша C, то применяется способность и вызывается её анимация
-                case Key.C:
-                    KeyUser(KeyControl.Napalm);
-                    break;
-            }
-        }
+        //        //если нажата клавиша C, то применяется способность и вызывается её анимация
+        //        case Key.C:
+        //            KeyUser(KeyControl.Napalm);
+        //            break;
+        //    }
+        //}
 
-        private void Window_KeyUp(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.A:
-                case Key.Down:
-                case Key.S:
-                case Key.Left:
-                case Key.Right:
-                case Key.Q:
-                case Key.Up:
-                case Key.W:
-                    KeyUser(KeyControl.Stop);
-                    break;
-            }
-        }
+        //private void Window_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    switch (e.Key)
+        //    {
+        //        case Key.A:
+        //        case Key.Down:
+        //        case Key.S:
+        //        case Key.Left:
+        //        case Key.Right:
+        //        case Key.Q:
+        //        case Key.Up:
+        //        case Key.W:
+        //            KeyUser(KeyControl.Stop);
+        //            break;
+        //    }
+        //}
 
     }
 }
