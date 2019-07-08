@@ -99,15 +99,6 @@
     <Compile Include="View\BattlePage.xaml.cs">
       <DependentUpon>BattlePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BattleWind.xaml.cs">
-      <DependentUpon>BattleWind.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\EndGame.xaml.cs">
-      <DependentUpon>EndGame.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ExitBattlePage.xaml.cs">
-      <DependentUpon>ExitBattlePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ExitBattleUC.xaml.cs">
       <DependentUpon>ExitBattleUC.xaml</DependentUpon>
     </Compile>
@@ -117,14 +108,8 @@
     <Compile Include="View\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PauseMenu.xaml.cs">
-      <DependentUpon>PauseMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\WinGame.xaml.cs">
-      <DependentUpon>WinGame.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\WinGameUC.xaml.cs">
-      <DependentUpon>WinGameUC.xaml</DependentUpon>
+    <Compile Include="View\EndGameUC.xaml.cs">
+      <DependentUpon>EndGameUC.xaml</DependentUpon>
     </Compile>
     <Page Include="Example.xaml">
       <SubType>Designer</SubType>
@@ -146,18 +131,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\BattleWind.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\EndGame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ExitBattlePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\ExitBattleUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,15 +143,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PauseMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\WinGame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\WinGameUC.xaml">
+    <Page Include="View\EndGameUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

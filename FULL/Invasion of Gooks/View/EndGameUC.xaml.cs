@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Invasion_of_Gooks.View
 {
     /// <summary>
-    /// Логика взаимодействия для ExitBattlePage.xaml
+    /// Логика взаимодействия для WinGameUC.xaml
     /// </summary>
-    public partial class ExitBattlePage : Page
+    public partial class EndGameUC : Viewbox
     {
-        public ExitBattlePage()
+        public EndGameUC()
         {
             InitializeComponent();
         }

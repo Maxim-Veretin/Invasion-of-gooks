@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using InvasionModel;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace InvasionViewModel
 {
@@ -70,10 +72,10 @@ namespace InvasionViewModel
         //    warSky.Gamer.Health = 10;
 
         //}
-        private void WarSky_ExplosionEvent(Sky sky, double top, double left, double width, double height)
-        {
-            throw new NotImplementedException();
-        }
+        //private void WarSky_ExplosionEvent(Sky sky, double top, double left, double width, double height)
+        //{
+        //    throw new NotImplementedException();
+        //}
         private void SaveResoult()
         {
             //dataGamer.Scr = warSky.scoreSky;
@@ -89,14 +91,16 @@ namespace InvasionViewModel
 
             //    connection.Close();
             //}
-            ModelDataBaseClass.Save(new DataGamer(ModelDataBaseClass.GamerName, warSky.scoreSky));
+            ModelDataBaseClass.Save(new DataGamer(ModelDataBaseClass.GamerName, warSky.Score));
         }
 
 
-        private void WarSky_EndGameEvent(Sky sky, EndGameEnum endGame)
+        private async void WarSky_EndGameEventAsync(Sky sky, EndGameEnum endGame)
         {
             //model.GamePause();
             //warSky.Pause();
+
+            await Task.Run(()=>Thread.Sleep(1000));
             IsEndGame = true;
             IsVictory = endGame == EndGameEnum.Win;
             //gamePlayer.Close();

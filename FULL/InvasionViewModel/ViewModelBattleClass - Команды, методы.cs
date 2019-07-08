@@ -115,7 +115,7 @@ namespace InvasionViewModel
             }
         }
 
-        public RelayCommand ExitGameCommand;
+        public RelayCommand ExitGameCommand { get; }
         private RelayCommand _exitGameMenuCommand;
         private RelayCommand _startGameCommand;
         private bool _isVictory;
@@ -165,7 +165,7 @@ namespace InvasionViewModel
             if (warSky != null)
             {
                 warSky.SoundEvent -= WarSky_SoundEvent;
-                warSky.EndGameEvent -= WarSky_EndGameEvent;
+                warSky.EndGameEvent -= WarSky_EndGameEventAsync;
                 //warSky.ExplosionEvent -= WarSky_ExplosionEvent;
             }
             model.GameStart();
@@ -177,9 +177,22 @@ namespace InvasionViewModel
             SkyHeight = warSky.Heidht;
 
             warSky.SoundEvent += WarSky_SoundEvent;
-            warSky.EndGameEvent += WarSky_EndGameEvent;
+            warSky.EndGameEvent += WarSky_EndGameEventAsync;
+            warSky.PropertyChanged += WarSky_PropertyChanged;
+            OnAllPropertyChanged();
             //warSky.ExplosionEvent += WarSky_ExplosionEvent;
         }
+
+        public int Frags => warSky.Frags;
+        public int Score => warSky.Score;
+
+
+        private void WarSky_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == nameof(Sky.Frags) || e.PropertyName == nameof(Sky.Score))
+                OnPropertyChanged(e.PropertyName);
+        }
+
         public void BreakGame()
         {
             model.GameBreak();

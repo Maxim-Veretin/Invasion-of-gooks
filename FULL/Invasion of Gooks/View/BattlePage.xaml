@@ -43,15 +43,65 @@
     <Viewbox >
         <Grid x:Name="scene" >
             <!--<TextBlock Text="{Binding IsPauseGame}" Panel.ZIndex="10" FontSize="50"/>-->
-            <local:WinGameUC Panel.ZIndex="10"/>
+            <Grid Panel.ZIndex="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local:EndGameUC Grid.Row="1" Grid.Column="1"/>
+            </Grid>
             <local:PauseGameUC Panel.ZIndex="10" Visibility="{Binding IsPauseKey, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             <local:ExitBattleUC VerticalAlignment="Center" HorizontalAlignment="Center" Panel.ZIndex="10"
                                 Visibility="{Binding IsShowExitGameMenu, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <Image gif:ImageBehavior.AnimatedSource="/Invasion of Gooks;component/Resources/finalfon1.gif" 
                    gif:ImageBehavior.RepeatBehavior="{Binding GameProperties.StopAnumationGif, Source={StaticResource ViewModelStatic}}"/>
-            <Label Content="HP" Height="30" Width="30"  Margin="5,701,1254,40" Background="Red" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="SF Movie Poster" FontSize="16"/>
-            <ProgressBar Maximum="{Binding Gamer.FullHealth}" Minimum="0" Background="Red" Foreground="DarkBlue" Value="{Binding Gamer.Health}" Margin="85,701,1024,40"/>
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="10"/>
+                        <Setter Property="Background" Value="#7FFF0000"/>
+                        <Setter Property="FontFamily" Value="SF Movie Poster"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="TextAlignment" Value="Center"/>
+                        <Setter Property="Padding" Value="10"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock>
+                        <Run Text="Убито"/>
+                        <Run Text="{Binding Frags, Mode=OneWay}"/>
+                    </TextBlock>
+                    <TextBlock Grid.Column="1">
+                        <Run Text="Очков"/>
+                        <Run Text="{Binding Score, Mode=OneWay}"/>
+                    </TextBlock>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="HP" />
+                    <ProgressBar Grid.Column="1" Maximum="{Binding Gamer.FullHealth}" Minimum="0" 
+                                 Background="Red" Foreground="DarkBlue" Value="{Binding Gamer.Health}" Margin="10"
+                                 Width="300" Opacity="0.5"/>
+                </Grid>
+            </Grid>
             <ItemsControl ItemsSource="{Binding UFOitems,Delay=50}" Background="{x:Null}">
                 <ItemsControl.Resources>
                     <DataTemplate DataType="{x:Type model:GamerClass}">
@@ -107,7 +157,9 @@
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
             <!--<Canvas x:Name="ExplosionCanvas">
-                --><!--<Border BorderBrush="Red" BorderThickness="1" Width="100" Height="100"/>--><!--
+                -->
+            <!--<Border BorderBrush="Red" BorderThickness="1" Width="100" Height="100"/>-->
+            <!--
             </Canvas>-->
         </Grid>
 

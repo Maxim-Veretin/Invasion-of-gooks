@@ -13,7 +13,11 @@ namespace InvasionViewModel
         bool IsEndGame { get; }
         bool IsVictory { get; }
 
+        int Frags { get; }
+        int Score { get; }
+
+
         RelayCommand StartGameCommand { get; }
-        RelayCommand ExitGameMenuCommand { get; }
+        RelayCommand ExitGameCommand { get; }
     }
 }

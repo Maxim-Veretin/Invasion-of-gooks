@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommLibrary;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Threading;
@@ -11,7 +12,7 @@ namespace InvasionModel
     public delegate void ExplosionHandler(Sky sky, double top, double left, double width, double height);
 
     /// <summary>Класс неба</summary>
-    public class Sky
+    public class Sky : OnPropertyChangedClass
     {
         /// <summary>количество yбитых врагов</summary>
         public int Frags
@@ -21,10 +22,12 @@ namespace InvasionModel
                 if (_frags < 10 && value > 9)
                     CreateBoss();
                 _frags = value;
+                OnPropertyChanged();
             }
         }
         //public bool haveBoss = false;
-        public int scoreSky = 0;
+        /// <summary>Набранные очки</summary>
+        public int Score { get => score; set { score = value; OnPropertyChanged(); } }
         //public bool bossDie = false;
 
         //public MediaPlayer enemyPlayer = new MediaPlayer();
@@ -47,7 +50,7 @@ namespace InvasionModel
         /// <summary>Вспомогательный метод для вызова события конец игры</summary>
         private void OnEndGame(EndGameEnum endGame)
         {
-            //IsEndGame = true;
+            IsEndGame = true;
             EndGameEvent?.Invoke(this, endGame);
         }
 
@@ -64,7 +67,7 @@ namespace InvasionModel
         public double Ratio { get; }
 
         ///// <summary>Игра закончена</summary>
-        //public bool IsEndGame { get; /*private*/ set; }
+        public bool IsEndGame { get; private set; }
 
         /// <summary>Объект игрока</summary>
         public GamerClass Gamer { get; }
@@ -109,7 +112,7 @@ namespace InvasionModel
                 FullHealth = Setting.GamerHealth
             };
             UFOitems.Add(Gamer);
-            UFOitems.Add(new ExplosionClass() {Width=Width, Height=Heidht });
+            //UFOitems.Add(new ExplosionClass() { Width = Width, Height = Heidht });
 
             timer.Interval = TimeSpan.FromMilliseconds(10);
             timer.Tick += Timer_Tick;
@@ -139,14 +142,16 @@ namespace InvasionModel
         {
             timer.Stop();
 
-            //if (IsEndGame)
-            //    return;
+            if (IsEndGame)
+                return;
 
             //делаем так, потомy что больше timeOld не нyжна 
             DateTime timeNew = DateTime.Now;
             TimeSpan intervalFrame = timeNew - timeOld;
             timeOld = timeNew;
             FrameMetodk(intervalFrame.TotalMilliseconds * 0.001);
+            if (IsEndGame)
+                return;
             timer.Start();
         }
 
@@ -154,16 +159,16 @@ namespace InvasionModel
         {
             //if (!IsEndGame)
             //{
-                MoveUFO(intervalSec);
-                ProjectiliesEnemies();
-                HittingGamer();
-                HittingEnemies();
-                CreateEnemies();
-                ExplosionRemove();
-                //if ((Frags >= 10) && (haveBoss == false))
-                //{
-                //    CreateBoss();
-                //}
+            MoveUFO(intervalSec);
+            ProjectiliesEnemies();
+            HittingGamer();
+            HittingEnemies();
+            CreateEnemies();
+            ExplosionRemove();
+            //if ((Frags >= 10) && (haveBoss == false))
+            //{
+            //    CreateBoss();
+            //}
             //}
         }
 
@@ -236,16 +241,16 @@ namespace InvasionModel
                         //OnExplosion(enemy.Top, enemy.Left, enemy.Width, enemy.Heidht);
                         if (enemy is EnemyBossClass)
                         {
-                            scoreSky += 200;
+                            Score += 200;
                             //bossDie = true;
 
                             //UFOitems.Remove(enemy);
-                            timer.Stop();
+                            //timer.Stop();
                             OnEndGame(EndGameEnum.Win);
                         }
                         else
                         {
-                            scoreSky += 20;
+                            Score += 20;
 
                             //UFOitems.Remove(enemy);
                         }
@@ -254,11 +259,11 @@ namespace InvasionModel
                         //    OnEndGame(EndGameEnum.Win);
                         //else
                         //{
-                            ExplosionClass explosion = enemy.Copy<ExplosionClass>();
-                            explosion.SpeedHorizontal = 0;
-                            explosion.SpeedVertical = 0;
+                        ExplosionClass explosion = enemy.Copy<ExplosionClass>();
+                        explosion.SpeedHorizontal = 0;
+                        explosion.SpeedVertical = 0;
 
-                            UFOitems.Add(explosion);
+                        UFOitems.Add(explosion);
                         //}
                         //if (bossDie == true)
                         //    OnEndGame(EndGameEnum.Win);
@@ -501,6 +506,8 @@ namespace InvasionModel
         }
 
         private TimeSpan timeOldDelta, oldEnemyDelte;
+        private int score;
+
         public void Continue()
         {
             if (!timer.IsEnabled)
