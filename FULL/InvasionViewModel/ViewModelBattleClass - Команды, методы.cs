@@ -183,8 +183,8 @@ namespace InvasionViewModel
             //warSky.ExplosionEvent += WarSky_ExplosionEvent;
         }
 
-        public int Frags => warSky.Frags;
-        public int Score => warSky.Score;
+        public int Frags => warSky?.Frags ?? 0;
+        public int Score => warSky?.Score ?? 0;
 
 
         private void WarSky_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
