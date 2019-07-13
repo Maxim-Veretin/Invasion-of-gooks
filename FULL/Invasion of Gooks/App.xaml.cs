@@ -24,8 +24,10 @@ namespace Invasion_of_Gooks
         readonly ViewModelBattleClass viewModelBattle;
         readonly ViewModelDataBaseClass viewModelDataBase;
 
-        readonly StartPage startPage;
-        readonly BattlePage battlePage;
+        //readonly StartPage startPage;
+        readonly StartUC startUC;
+        //readonly BattlePage battlePage;
+        readonly BattleUC battleUC;
         private bool isExit = false;
 
         public App()
@@ -43,8 +45,10 @@ namespace Invasion_of_Gooks
                     (p) => true
                 );
             mainWindow = new MainWindow();
-            startPage = new StartPage(viewModelDataBase);
-            battlePage = new BattlePage(viewModelBattle);
+            //startPage = new StartPage(viewModelDataBase);
+            startUC = new StartUC() { DataContext = viewModelDataBase };
+            //battlePage = new BattlePage(viewModelBattle);
+            battleUC = new BattleUC() { DataContext = viewModelBattle };
             mainWindow.Closing += MainWindow_Closing;
 
             /// Запуск звукового фона
@@ -65,7 +69,8 @@ namespace Invasion_of_Gooks
 
         private void MainMetod(object parameter = null)
         {
-            mainWindow.Content = startPage;
+            //mainWindow.Content = startPage;
+            mainWindow.Content = startUC;
 
             MediaPlayerEnum.MainWindow.Play();
             MediaPlayerEnum.RideOfTheValkyries.Pause();
@@ -74,7 +79,8 @@ namespace Invasion_of_Gooks
 
         private void StartMetod(object parameter = null)
         {
-            mainWindow.Content = battlePage;
+            //mainWindow.Content = battlePage;
+            mainWindow.Content = battleUC;
             //viewModelBattle.StartGame();
             MediaPlayerEnum.MainWindow.Stop();
             MediaPlayerEnum.RideOfTheValkyries.Play();

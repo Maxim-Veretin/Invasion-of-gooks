@@ -19,15 +19,18 @@ namespace Invasion_of_Gooks.View
     /// <summary>
     /// Логика взаимодействия для MainPage.xaml
     /// </summary>
-    public partial class StartPage : Page
+    public partial class StartUC : Grid
     {
-        ViewModelDataBaseClass ViewModel { get; }
-        public StartPage(ViewModelDataBaseClass viewModel)
+        ViewModelDataBaseClass ViewModel { get; set; }
+        public StartUC()
         {
+            DataContextChanged += StartUC_DataContextChanged;
             InitializeComponent();
-            ViewModel = viewModel;
-            DataContext = ViewModel;
         }
 
+        private void StartUC_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ViewModel = e.NewValue as ViewModelDataBaseClass;
+        }
     }
 }

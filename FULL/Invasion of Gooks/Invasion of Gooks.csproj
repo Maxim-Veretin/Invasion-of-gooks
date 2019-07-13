@@ -96,8 +96,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="MediaPlayerEnum.cs" />
-    <Compile Include="View\BattlePage.xaml.cs">
-      <DependentUpon>BattlePage.xaml</DependentUpon>
+    <Compile Include="View\BattleUC.xaml.cs">
+      <DependentUpon>BattleUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ExitBattleUC.xaml.cs">
       <DependentUpon>ExitBattleUC.xaml</DependentUpon>
@@ -105,8 +105,8 @@
     <Compile Include="View\PauseGameUC.xaml.cs">
       <DependentUpon>PauseGameUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StartPage.xaml.cs">
-      <DependentUpon>StartPage.xaml</DependentUpon>
+    <Compile Include="View\StartUC.xaml.cs">
+      <DependentUpon>StartUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EndGameUC.xaml.cs">
       <DependentUpon>EndGameUC.xaml</DependentUpon>
@@ -127,9 +127,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\BattlePage.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\BattleUC.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ExitBattleUC.xaml">
       <SubType>Designer</SubType>
@@ -139,9 +139,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\StartPage.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="View\StartUC.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\EndGameUC.xaml">
       <SubType>Designer</SubType>
