@@ -28,6 +28,9 @@ namespace Invasion_of_Gooks.View
             InitializeComponent();
         }
 
+        /// <summary>"Вытягивание" ViewModel из контекста данных</summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartUC_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ViewModel = e.NewValue as ViewModelDataBaseClass;

@@ -21,12 +21,16 @@ namespace InvasionViewModel
         /// в параметре команды должна передаваться нажатая клавиша в типе System.Windows.Input.Key</remarks>
         public RelayCommand KeyCommand => _keyCommand ?? (_keyCommand = new RelayCommand(KeyMetod, KeyCanMetod));
 
+        /// <summary>Проверка на принадлежность parameter перечислению Key</summary>
+        /// <param name="parameter"></param>
+        /// <returns><see langword="true"/> если parameter типа Key</returns>
         private bool KeyCanMetod(object parameter)
         {
             return parameter is Key;
         }
 
-
+        /// <summary>Исполнение нажатия клавиши</summary>
+        /// <param name="parameter">Нажатая клавиша в типе Key</param>
         private void KeyMetod(object parameter)
         {
 
@@ -115,21 +119,25 @@ namespace InvasionViewModel
             }
         }
 
+        /// <summary>Команда выхода из игры</summary>
         public RelayCommand ExitGameCommand { get; }
-        private RelayCommand _exitGameMenuCommand;
-        private RelayCommand _startGameCommand;
         private bool _isVictory;
 
+        /// <summary>Команда выхода из боя</summary>
         public RelayCommand ExitBattleCommand => _exitBattleCommand ?? (_exitBattleCommand = new RelayCommand(ExitBattleMetod, ExitBattleCanMetod));
 
+        /// <summary>Проверка команды выхода из боя</summary>
         private bool ExitBattleCanMetod(object parameter) => ExitGameCommand == null ? true : ExitGameCommand.CanExecute(parameter);
 
+        /// <summary>Исполнение команды выхода из боя</summary>
         private void ExitBattleMetod(object parameter)
         {
             if (ExitGameCommand != null)
                 ExitGameCommand.Execute(parameter);
         }
 
+        private RelayCommand _exitGameMenuCommand;
+        /// <summary>Команда показа меню выхода из игры</summary>
         public RelayCommand ExitGameMenuCommand => _exitGameMenuCommand ?? (_exitGameMenuCommand = new RelayCommand(ExitGameMenuMetod, ExitGameMenuCanMetod));
 
         private bool ExitGameMenuCanMetod(object parameter)
@@ -153,10 +161,14 @@ namespace InvasionViewModel
         /// <param name="sound"></param>
         private void OnSound(SoundEnum sound) => SoundEvent?.Invoke(this, sound);
 
+        private RelayCommand _startGameCommand;
+        /// <summary>Команда старта игры</summary>
         public RelayCommand StartGameCommand => _startGameCommand ?? (_startGameCommand = new RelayCommand(_ => StartGame()));
 
+        /// <summary>Игра закончена победой</summary>
         public bool IsVictory { get => _isVictory; private set { _isVictory = value; OnPropertyChanged(); } }
 
+        /// <summary>Запуск игры</summary>
         public void StartGame()
         {
             IsPauseKey = true;
@@ -169,6 +181,8 @@ namespace InvasionViewModel
                 //warSky.ExplosionEvent -= WarSky_ExplosionEvent;
             }
             model.GameStart();
+            ViewModelGameStaticProperty.SingularExemplar.IsStarted = true;
+            ViewModelGameStaticProperty.SingularExemplar.IsEnded = false;
             warSky = model.WarSky;
 
             UFOitems = warSky.UFOitems;
@@ -183,18 +197,22 @@ namespace InvasionViewModel
             //warSky.ExplosionEvent += WarSky_ExplosionEvent;
         }
 
+        /// <summary>Количество убитых</summary>
         public int Frags => warSky?.Frags ?? 0;
+        /// <summary>Количество набранных очков</summary>
         public int Score => warSky?.Score ?? 0;
 
-
+        /// <summary>Прослушка изменний значений свойств WarSky</summary>
         private void WarSky_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == nameof(Sky.Frags) || e.PropertyName == nameof(Sky.Score))
                 OnPropertyChanged(e.PropertyName);
         }
 
+        /// <summary>Прерывание игры</summary>
         public void BreakGame()
         {
+            ViewModelGameStaticProperty.SingularExemplar.IsEnded = true;
             model.GameBreak();
         }
 

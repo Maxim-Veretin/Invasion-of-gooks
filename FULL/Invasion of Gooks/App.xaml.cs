@@ -3,6 +3,7 @@ using Invasion_of_Gooks.View;
 using InvasionViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.IO;
@@ -24,14 +25,15 @@ namespace Invasion_of_Gooks
         readonly ViewModelBattleClass viewModelBattle;
         readonly ViewModelDataBaseClass viewModelDataBase;
 
-        //readonly StartPage startPage;
         readonly StartUC startUC;
-        //readonly BattlePage battlePage;
         readonly BattleUC battleUC;
+
+        /// <summary>Поле для блокировки "нелегального" закрытия окна</summary>
         private bool isExit = false;
 
         public App()
         {
+            /// Создание VM, View и их связывание
             viewModelDataBase = new ViewModelDataBaseClass
                 (
                     StartMetod,
@@ -45,20 +47,12 @@ namespace Invasion_of_Gooks
                     (p) => true
                 );
             mainWindow = new MainWindow();
-            //startPage = new StartPage(viewModelDataBase);
             startUC = new StartUC() { DataContext = viewModelDataBase };
-            //battlePage = new BattlePage(viewModelBattle);
             battleUC = new BattleUC() { DataContext = viewModelBattle };
             mainWindow.Closing += MainWindow_Closing;
 
-            /// Запуск звукового фона
+            /// Пауза звукового фона до загрузки окна
             MediaPlayerExtensions.AllPause();
-            //MediaPlayerEnum.MainWindow.Play(true);
-            //MediaPlayerEnum.MainWindow.Pause();
-            //MediaPlayerEnum.RideOfTheValkyries.Play(true);
-            //MediaPlayerEnum.RideOfTheValkyries.Pause();
-            //MediaPlayerEnum.Propeller1.Play(true);
-            //MediaPlayerEnum.Propeller1.Pause();
 
             /// Продолжение проигрывания всех плееров в ктивном окне
             mainWindow.Activated += (s, e) => MediaPlayerExtensions.AllContinue();
@@ -67,9 +61,10 @@ namespace Invasion_of_Gooks
 
         }
 
+        /// <summary>Метод для перехода к отображению Главного меню</summary>
+        /// <param name="parameter"></param>
         private void MainMetod(object parameter = null)
         {
-            //mainWindow.Content = startPage;
             mainWindow.Content = startUC;
 
             MediaPlayerEnum.MainWindow.Play();
@@ -77,11 +72,12 @@ namespace Invasion_of_Gooks
             MediaPlayerEnum.Propeller1.Pause();
         }
 
+        /// <summary>Метод Главного меню для старта игры</summary>
+        /// <param name="parameter"></param>
         private void StartMetod(object parameter = null)
         {
-            //mainWindow.Content = battlePage;
             mainWindow.Content = battleUC;
-            //viewModelBattle.StartGame();
+
             MediaPlayerEnum.MainWindow.Stop();
             MediaPlayerEnum.RideOfTheValkyries.Play();
             MediaPlayerEnum.Propeller1.Play();
@@ -89,17 +85,22 @@ namespace Invasion_of_Gooks
                 MediaPlayerEnum.Propeller1.Pause();
         }
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        /// <summary>Обработка попытки закрытия окна</summary>
+        /// <remarks>Закрытие окна разрешается если установлено
+        /// поле isExit</remarks>
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             e.Cancel = !isExit;
         }
 
+        /// <summary>Старт приложения</summary>
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             MainMetod();
             mainWindow.Show();
         }
 
+        /// <summary>Метод "легального" закрытия окна</summary>
         private void ExitMetod(object parameter)
         {
             isExit = true;

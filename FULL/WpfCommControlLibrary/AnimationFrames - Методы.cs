@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace WpfCommControlLibrary
 {
+    /// <summary>Класс для анимации кадров из одного изображения</summary>
     public partial class AnimationFrames
     {
         /// <summary>Метод обратного вызова при изменении значения свойства Action (действие)</summary>
@@ -34,6 +28,8 @@ namespace WpfCommControlLibrary
                 case AnimationFramesActionEnum.Start:
                     timer.Stop();
 
+                    /// Если источник кадров задан, то анимация начинается сразу.
+                    /// Иначе анимация начнётся после загрузки источника
                     CurrentFrame = (isStarted = (SourceFrames == null)) ? -1 : 0;
 
                     Action = AnimationFramesActionEnum.Visible;
@@ -47,6 +43,7 @@ namespace WpfCommControlLibrary
             }
         }
 
+        /// <summary>Поле для отложенного запуска после загрузки</summary>
         private bool isStarted;
 
         /// <summary>Установка заданного кадра</summary>

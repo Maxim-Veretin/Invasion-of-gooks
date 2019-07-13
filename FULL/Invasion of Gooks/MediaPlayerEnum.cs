@@ -6,6 +6,7 @@ using System.Windows.Media;
 
 namespace Invasion_of_Gooks
 {
+    /// <summary>Перечиление значений используемых плееров</summary>
     public enum MediaPlayerEnum
     {
         /// <summary>Взрыв</summary>
@@ -31,17 +32,26 @@ namespace Invasion_of_Gooks
         /// <summary>Для стартовой страницы</summary>
         MainWindow
     }
-
+    /// <summary>Класс расширений для плееров</summary>
     public static class MediaPlayerExtensions
     {
+        /// <summary>Класс с дополинтеоьными свойствами для управления плеером</summary>
         public class PlayersStruct
         {
+            /// <summary>Плеер</summary>
             public MediaPlayer Player { get; }
+            /// <summary>Плеер запущен</summary>
             public bool Play { get; set; }
+            /// <summary>Плеер на паузе</summary>
             public bool Pause { get; set; }
+            /// <summary>Имя источника для плеера</summary>
             public string UriString { get; }
+            /// <summary>Uri источника для плеера</summary>
             public Uri Uri { get; }
+            /// <summary>Плеер на повторе</summary>
             public bool Repeat { get; set; }
+            /// <summary>Конструктор плеера с заданием источника</summary>
+            /// <param name="uriString">Имя источника для плеера</param>
             public PlayersStruct(string uriString)
             {
                 UriString = uriString;
@@ -60,8 +70,8 @@ namespace Invasion_of_Gooks
             }
 
         }
-        public static KeyValuePair<MediaPlayerEnum, PlayersStruct> ToDictPlayer(this MediaPlayerEnum sound, string uriString)
-            => new KeyValuePair<MediaPlayerEnum, PlayersStruct>(sound, new PlayersStruct(uriString));
+
+        /// <summary>Словарь сопоставление значений плееров с источниками</summary>
         public static readonly IDictionary<MediaPlayerEnum, PlayersStruct> Players = new (MediaPlayerEnum player, string uri)[]
         {
            (MediaPlayerEnum.MainWindow, "menuSingle.wav"),
@@ -73,19 +83,6 @@ namespace Invasion_of_Gooks
 
         }
         .ToDictionary(item => item.player, item => new PlayersStruct(item.uri));
-        //public static IDictionary<MediaPlayerEnum, bool> PlayersPlay = new Dictionary<MediaPlayerEnum, bool>();
-
-        ///// <summary>Статический конструтор</summary>
-        //static MediaPlayerExtensions()
-        //{
-        //    string folder = Directory.GetCurrentDirectory() + "\\Resources\\Sound\\";
-        //    foreach (KeyValuePair<MediaPlayerEnum, string> item in NameFiles)
-        //    {
-        //        var qwer = new Uri(folder + item.Value, UriKind.Relative);
-        //        Players[item.Key] = new MediaPlayer();
-        //        Players[item.Key].Open(new Uri(folder + item.Value));
-        //    }
-        //}
 
         /// <summary>Проирывание связанного медиа</summary>
         /// <param name="sound">Значение медиа</param>

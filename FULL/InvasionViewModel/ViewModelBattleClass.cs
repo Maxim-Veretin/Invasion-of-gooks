@@ -11,169 +11,58 @@ namespace InvasionViewModel
 {
     public partial class ViewModelBattleClass : OnPropertyChangedClass
     {
-        //================================================!!!=================
-        //public Window own = null;
 
-        //public double SkyWidth { get; set; }
-
+        /// <summary>Ширина неба</summary>
         public double SkyWidth { get; set; }
+        /// <summary>Высота неба</summary>
         public double SkyHeight { get; set; }
 
-        //SQLiteConnection m_dbConnection;
-
+        /// <summary>Модель</summary>
         private readonly ModelClass model = new ModelClass();
 
+        private GamerClass _gamer;
+        private ObservableCollection<UFOClass> _uFOitems;
+        /// <summary>Объекты неба</summary>
         public ObservableCollection<UFOClass> UFOitems { get => _uFOitems; private set { _uFOitems = value; OnPropertyChanged(); } }
+        /// <summary>Объект Игрок</summary>
         public GamerClass Gamer { get => _gamer; private set { _gamer = value; OnPropertyChanged(); } }
 
-        //public DataGamer dataGamer;
-
+        /// <summary>Небо</summary>
         public Sky warSky;
+
+        /// <summary>Настройки</summary>
         public SkySetting Setting { get; }
-        public string nameReceiver;
-        public int scoreReceiver;
-        //public MediaPlayer gamePlayer = new MediaPlayer();
-        //public MediaPlayer gamePlayerPropellers = new MediaPlayer();
-        public MediaPlayer pleer = new MediaPlayer();
-        public MediaPlayer pleer1 = new MediaPlayer();
-        public MediaPlayer pleer2 = new MediaPlayer();
-        //private bool _isStop;
-        private ObservableCollection<UFOClass> _uFOitems;
-        private GamerClass _gamer;
 
-        //public bool IsStop { get => _isStop; private set { _isStop = value; OnPropertyChanged(); } }
-        /// <summary>Метод разрешающий выполнение команды</summary>
-        /// <param name="parameter"></param>
-        /// <return><see langword="true"/> если команда разрешена</returns>
-        //private bool SaveResultCanMetod(object parameter)
-        //{
-        //    return parameter is object[] arr && arr.Length>1 && int.TryParse( arr[1].ToString(), out int _tmp);
-        //}
 
-        //private void SaveResultMetod(object parameter)
-        //{
-        //    if (SaveResultCanMetod(parameter))
-        //    {
-        //        object[] arr = (object[])parameter;
-        //        model.SaveResult(new DataGamer() { Name=arr[0].ToString(), Scr = int.Parse(arr[1].ToString())});
-        //    }
-        //}
-        //public void ResetValue()
-        //{
-        //    //warSky = new Sky();
-        //    Gamer.Top = 760 * .9;
-        //    Gamer.Left = 1360 * .5;
-        //    Gamer.SpeedHorizontal = 0;
-        //    Gamer.SpeedVertical = 0;
-        //    //warSky.timer.Tick -= Timer_Tick;
-        //    warSky.IsEndGame = false;
-        //    warSky.scoreSky = 0;
-        //    //warSky.haveBoss = false;
-        //    warSky.Gamer.Health = 10;
-
-        //}
-        //private void WarSky_ExplosionEvent(Sky sky, double top, double left, double width, double height)
-        //{
-        //    throw new NotImplementedException();
-        //}
         private void SaveResoult()
         {
-            //dataGamer.Scr = warSky.scoreSky;
-
-            //using (SQLiteConnection connection = new SQLiteConnection(ModelDataBaseClass.DataBaseFullName))
-            //{
-            //    connection.Open();
-
-            //    string sql = "INSERT INTO kyrsach (Name, Score) VALUES ('" + /*DtGamer.Name*/NameGamer + "'," + /*DtGamer.Scr*/warSky.scoreSky.ToString() + ")";
-
-            //    SQLiteCommand command = new SQLiteCommand(sql, connection);
-            //    command.ExecuteNonQuery();
-
-            //    connection.Close();
-            //}
             ModelDataBaseClass.Save(new DataGamer(ModelDataBaseClass.GamerName, warSky.Score));
         }
 
 
+        /// <summary>Конец игры</summary>
+        /// <param name="sky"></param>
+        /// <param name="endGame"></param>
+        /// <remarks>Игра заканчивается с паузой в 1 секунду,
+        /// чтобы успела закончится анимация последнего взрыва</remarks>
         private async void WarSky_EndGameEventAsync(Sky sky, EndGameEnum endGame)
         {
-            //model.GamePause();
-            //warSky.Pause();
-
-            await Task.Run(()=>Thread.Sleep(1000));
+            await Task.Run(() => Thread.Sleep(1000));
             IsEndGame = true;
             IsVictory = endGame == EndGameEnum.Win;
-            //gamePlayer.Close();
-            //gamePlayerPropellers.Close();
-            //DtGamer.Scr = warSky.scoreSky;
-            //IsStop = true;
-
-            //switch (endGame)
-            //{
-            //    case EndGameEnum.Losing:
-            //        //SaveResoult();
-            //        //EndGame endgame = new EndGame();
-            //        //endgame.ShowDialog();
-            //        //own.Owner.Show();
-            //        //own.Close();
-            //        //ResetValue();
-            //        //warSky.IsEndGame = false;
-            //        break;
-
-            //    case EndGameEnum.Win:
-
-            //        SaveResoult();
-            //        //WinGame winGame = new WinGame();
-            //        //winGame.ShowDialog();
-            //        //================================================!!!=================
-            //        //own.Owner.Show();
-            //        //own.Close();
-            //        //ResetValue();
-            //        //warSky.IsEndGame = false;
-            //        break;
-            //}
-
         }
 
-        //private readonly Dictionary<SoundEnum, MediaPlayer> Pleers = new Dictionary<SoundEnum, MediaPlayer>();
+        /// <summary>Перенаправление звуковых событий слушателям</summary>
+        /// <param name="sender"></param>
+        /// <param name="sound"></param>
         private void WarSky_SoundEvent(object sender, SoundEnum sound)
         {
             OnSound(sound);
-            //switch (sound)
-            //{
-            //    case SoundEnum.enemyDie:
-            //        //на паре
-            //        pleer.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/bang.wav", UriKind.Absolute));
-
-            //        //дома
-            //        //pleer.Open(new Uri("C:/Users/Администратор/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/Sound/bang.wav", UriKind.Absolute));
-            //        pleer.Volume = 0.5;
-            //        pleer.Play();
-            //        break;
-
-            //    case SoundEnum.gamerShot:
-            //        //на паре
-            //        pleer1.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/singleShot.wav", UriKind.Absolute));
-
-            //        //дома
-            //        //pleer1.Open(new Uri("C:/Users/Администратор/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/Sound/singleShot.wav", UriKind.Absolute));
-            //        pleer1.Volume = 0.1;
-            //        pleer1.Play();
-            //        break;
-
-            //    case SoundEnum.gamerRocket:
-            //        //на паре
-            //        pleer2.Open(new Uri("C:/Users/Admin/Desktop/FULL/Invasion of Gooks/Resources/Sound/rocket.wav", UriKind.Absolute));
-
-            //        //дома
-            //        //pleer2.Open(new Uri("C:/Users/Администратор/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/Sound/rocket.wav", UriKind.Absolute));
-            //        pleer2.Volume = 0.1;
-            //        pleer2.Play();
-            //        break;
-            //}
-            //// Pleers[sound].Play();
         }
 
+        /// <summary>Обработка действий из игры</summary>
+        /// <param name="action">Действие</param>
+        /// <remarks>Большая часть действий перенаправляется в Модель</remarks>
         public void KeyUser(KeyControl action)
         {
             switch (action)
@@ -206,7 +95,7 @@ namespace InvasionViewModel
         public RelayCommand SaveResultCommand { get; }
     }
 
-    /// <summary>перечисление действий</summary>
+    /// <summary>Перечисление действий</summary>
     public enum KeyControl
     {
         Up,

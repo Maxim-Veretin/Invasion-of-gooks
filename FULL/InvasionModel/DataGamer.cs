@@ -2,6 +2,7 @@
 
 namespace InvasionModel
 {
+    /// <summary>Сериализуемы класс с результатами игрока</summary>
     [Serializable]
     public class DataGamer : IComparable<DataGamer>
     {

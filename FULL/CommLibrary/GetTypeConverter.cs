@@ -8,6 +8,8 @@ using System.Windows.Data;
 
 namespace CommLibrary
 {
+    /// <summary>Получение информации о типе или свойствах типа</summary>
+    /// <remarks>Используется для отладки View</remarks>
     public class GetTypeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

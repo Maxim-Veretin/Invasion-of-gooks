@@ -15,20 +15,17 @@ namespace InvasionViewModel
         public ObservableCollection<DataGamer> DataGamers => ModelDataBaseClass.DataGamers;
         /// <summary>Имя файла и формат</summary>
         public string FileName { get; } = ModelDataBaseClass.FileName;
-        ///// <summary>Имя игрока</summary>
-        //public string GamerName
-        //{
-        //    get => ModelDataBaseClass.GamerName;
-        //    set
-        //    {
-        //        ModelDataBaseClass.GamerName = value;
-        //        OnPropertyChanged();
-        //        StartCommand.Invalidate();
-        //    }
-        //}
+
+        /// <summary>Команда для старта игры</summary>
         public RelayCommand StartCommand { get; }
+        /// <summary>Команда для выхода</summary>
         public RelayCommand ExitCommand { get; }
 
+        /// <summary>Конструктор с методами для команд</summary>
+        /// <param name="executeStartCommand">Исполняющий метод команды старта игры</param>
+        /// <param name="canExecuteStartCommand">Проверяющий метод команды старта игры</param>
+        /// <param name="executeExitCommand">Исполняющий метод команды выхода</param>
+        /// <param name="canExecuteExitCommand">Проверяющий метод команды выхода</param>
         public ViewModelDataBaseClass
             (
                 ExecuteHandler executeStartCommand, CanExecuteHandler canExecuteStartCommand,

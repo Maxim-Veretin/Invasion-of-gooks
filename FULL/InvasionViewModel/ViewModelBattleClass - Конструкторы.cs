@@ -9,27 +9,15 @@ namespace InvasionViewModel
 {
     public partial class ViewModelBattleClass : OnPropertyChangedClass
     {
-        //public static ViewModelClass ViewModel { get; } = new ViewModelClass();
+        /// <summary>Сокрытие безпараметрического конструтора</summary>
         private ViewModelBattleClass()
         {
 
-            //StartCommand = new RelayCommand(StartMetod, StartCanMetod);
-
-            //SaveResultCommand = new RelayCommand(SaveResultMetod,SaveResultCanMetod);
-
-            //warSky = model.WarSky;
-
-            //UFOitems = warSky.UFOitems;
-            //Gamer = warSky.Gamer;
-            //SkyWidth = warSky.Width;
-            //SkyHeight = warSky.Heidht;
-
-            //warSky.SoundEvent += WarSky_SoundEvent;
-            //warSky.EndGameEvent += WarSky_EndGameEvent;
-            //warSky.ExplosionEvent += WarSky_ExplosionEvent;
 
         }
-
+        /// <summary>Конструтор с методами для команды выхода из игры</summary>
+        /// <param name="exitGameMetod">Исполняющий метод команды</param>
+        /// <param name="exitGameCanMetod">Проыеряющий метод команды</param>
         public ViewModelBattleClass(ExecuteHandler exitGameMetod, CanExecuteHandler exitGameCanMetod) : this()
         {
             ExitGameCommand = new RelayCommand(exitGameMetod, exitGameCanMetod);

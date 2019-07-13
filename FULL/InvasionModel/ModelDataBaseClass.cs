@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 
 namespace InvasionModel
 {
+    /// <summary>Сериализуемый класс с данными игры</summary>
     [Serializable]
     public static class ModelDataBaseClass
     {

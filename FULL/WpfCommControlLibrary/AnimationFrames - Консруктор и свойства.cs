@@ -12,20 +12,17 @@ namespace WpfCommControlLibrary
 {
     public partial class AnimationFrames : UserControl
     {
-
+        /// <summary>Поле с таймером</summary>
         private DispatcherTimer timer = new DispatcherTimer();
 
         public AnimationFrames()
         {
-            //AddChild(RectangleProp);
 
             ImageFrameBrush = new ImageBrush
             {
                 AlignmentX = AlignmentX.Left,
                 AlignmentY = AlignmentY.Top,
-                //Viewbox = rects[0] /*new Rect(0, 0, frameW, frameH)*/,
                 ViewboxUnits = BrushMappingMode.Absolute,
-                //ImageSource = ExplosionImage
             };
             Background = ImageFrameBrush;
             timer.Tick += Timer_Tick;
@@ -62,7 +59,7 @@ namespace WpfCommControlLibrary
         }
 
 
-
+        /// <summary>Источник кадров</summary>
         public ImageSourceFrames SourceFrames
         {
             get { return (ImageSourceFrames)GetValue(SourceFramesProperty); }
@@ -100,31 +97,6 @@ namespace WpfCommControlLibrary
             ((AnimationFrames)d).timer.Interval = TimeSpan.FromMilliseconds((uint)e.NewValue);
         }
 
-        //new FrameworkPropertyMetadata(null, FramesChangedCallback));
-
-        //private static void FramesChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    ICollection<Rect> newValue = (ICollection<Rect>)e.NewValue;
-        //    if (newValue == null)
-        //        ((AnimationFrames)d).CountFrames = -1;
-        //    else
-        //        ((AnimationFrames)d).CountFrames = newValue.Count;
-        //}
-
-        ///// <summary>Количество кадров</summary>
-        //public int CountFrames
-        //{
-        //    get { return (int)GetValue(CountFramesProperty); }
-        //    private set { SetValue(CountFramesKey, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for CountFrames.  This enables animation, styling, binding, etc...
-        //protected static readonly DependencyPropertyKey CountFramesKey =
-        //    DependencyProperty.RegisterReadOnly("CountFrames", typeof(int), typeof(AnimationFrames), new PropertyMetadata(-1));
-
-
-        //// Using a DependencyProperty as the backing store for CountFrames.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty CountFramesProperty = CountFramesKey.DependencyProperty;
 
         /// <summary>Действие</summary>
         public AnimationFramesActionEnum Action
@@ -194,7 +166,7 @@ namespace WpfCommControlLibrary
 
 
 
-
+        /// <summary>Циклический повтор анимации</summary>
         public bool Replay
         {
             get { return (bool)GetValue(ReplayProperty); }
@@ -221,5 +193,9 @@ namespace WpfCommControlLibrary
 
     }
 
+    /// <summary>Делегат для обратного вызова при изменении действия</summary>
+    /// <param name="newValue">Новое действие</param>
+    /// <param name="oldValue">Старое действие</param>
+    /// <returns>Действие которое надо установить</returns>
     public delegate AnimationFramesActionEnum ActionCallbackHandler(AnimationFramesActionEnum newValue, AnimationFramesActionEnum oldValue);
 }

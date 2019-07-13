@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace CommLibrary
 {
+    /// <summary>Класс WPF конвертора для присвоения одного из двух значений</summary>
     public class IIfConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -1,6 +1,6 @@
 ﻿namespace InvasionModel
 {
-
+    /// <summary>Класс Модели для игры</summary>
     public class ModelClass
     {
         /// <summary>Небо игры с объектами</summary>

@@ -11,6 +11,8 @@ namespace WpfCommControlLibrary
 {
 
     /// <summary>DependencyObject для изображения и списка кадров</summary>
+    /// <remarks>Используется в AnimationFrames 
+    /// как тип для источника кадров SourceFrames</remarks>
     public class ImageSourceFrames : DependencyObject
     {
 

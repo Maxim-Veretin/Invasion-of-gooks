@@ -13,6 +13,7 @@ namespace InvasionViewModel
         private bool _isPauseKey = true;
         private bool _isEndGame;
 
+        /// <summary>Показ меню выхода из игры</summary>
         public bool IsShowExitGameMenu
         {
             get => _isShowExitGameMenu;
@@ -20,10 +21,10 @@ namespace InvasionViewModel
             {
                 _isShowExitGameMenu = value;
                 OnPropertyChanged();
-                //OnPropertyChanged(nameof(IsPauseGame));
                 PauseGame();
             }
         }
+        /// <summary>Показ паузы в игре</summary>
         public bool IsPauseKey
         {
             get => _isPauseKey;
@@ -31,11 +32,11 @@ namespace InvasionViewModel
             {
                 _isPauseKey = value;
                 OnPropertyChanged();
-                //OnPropertyChanged(nameof(IsPauseGame));
                 PauseGame();
             }
         }
 
+        /// <summary>Метод задающий паузу в игре</summary>
         private void PauseGame()
         {
             if (ViewModelGameStaticProperty.SingularExemplar.IsPause = IsPauseKey || IsShowExitGameMenu || IsEndGame)
@@ -45,16 +46,18 @@ namespace InvasionViewModel
 
         }
 
+        /// <summary>Игра закончена</summary>
         public bool IsEndGame
         {
             get => _isEndGame;
             private set
             {
-                _isEndGame = value;
+                ViewModelGameStaticProperty.SingularExemplar.IsEnded = _isEndGame = value;
                 OnPropertyChanged();
+                if (IsEndGame)
+                    ViewModelGameStaticProperty.SingularExemplar.IsStarted = false;
                 PauseGame();
             }
-            //public bool IsPauseGame => IsPauseKey || IsShowExitGameMenu;
         }
     }
 }
