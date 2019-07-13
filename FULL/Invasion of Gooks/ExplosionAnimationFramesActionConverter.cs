@@ -20,7 +20,7 @@ namespace Invasion_of_Gooks
                     =>
                 {
                     if (oldValue == AnimationFramesActionEnum.Stop && newValue == AnimationFramesActionEnum.Hidden)
-                        explosion.Remove();
+                        explosion.Health=-1;
                     return newValue;
                 };
                 return action;

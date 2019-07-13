@@ -13,6 +13,13 @@ namespace InvasionModel
         private double _width;
         private double _height;
 
+        private double _health;
+        private double _fullHealth;
+
+        /// <summary>Здоровье</summary>
+        public double Health { get => _health; set { _health = value; OnPropertyChanged(); } }
+        /// <summary>Полное здоровье</summary>
+        public double FullHealth { get => _fullHealth; set { _fullHealth = value; OnPropertyChanged(); } }
         /// <summary>Ширина</summary>
         public double Width { get => _width; set { _width = value; OnPropertyChanged(); } }
         /// <summary>Высота</summary>
@@ -112,22 +119,11 @@ namespace InvasionModel
 
     public class ExplosionClass : UFOClass
     {
-        private bool _isRemove = false;
-        /// <summary>Элементы с установленным свойством должны быть удалены</summary>
-        public bool IsRemove { get => _isRemove; private set { _isRemove = value; OnPropertyChanged(); } }
-        public void Remove() => IsRemove = true;
     }
 
     public class HeliopterClass : UFOClass
     {
         private DateTime _projectileTime;
-        private double _health;
-        private double _fullHealth;
-
-        /// <summary>Здоровье</summary>
-        public double Health { get => _health; set { _health = value; OnPropertyChanged(); } }
-        /// <summary>Полное здоровье</summary>
-        public double FullHealth { get => _fullHealth; set { _fullHealth = value; OnPropertyChanged(); } }
         /// <summary>Время последнего выстрела</summary>
         public DateTime ProjectileTime { get => _projectileTime; set { _projectileTime = value; OnPropertyChanged(); } }
     }

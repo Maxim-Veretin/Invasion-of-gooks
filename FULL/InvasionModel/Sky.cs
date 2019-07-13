@@ -14,23 +14,26 @@ namespace InvasionModel
     /// <summary>Класс неба</summary>
     public class Sky : OnPropertyChangedClass
     {
+
+        private int _frags = 0;
         /// <summary>количество yбитых врагов</summary>
         public int Frags
         {
             get => _frags; private set
             {
+                /// Если количество убитых превысило 10,
+                /// то создаётся БОСС
                 if (_frags < 10 && value > 9)
                     CreateBoss();
                 _frags = value;
                 OnPropertyChanged();
             }
         }
-        //public bool haveBoss = false;
-        /// <summary>Набранные очки</summary>
-        public int Score { get => score; set { score = value; OnPropertyChanged(); } }
-        //public bool bossDie = false;
 
-        //public MediaPlayer enemyPlayer = new MediaPlayer();
+        private int _score;
+        /// <summary>Набранные очки</summary>
+        public int Score { get => _score; set { _score = value; OnPropertyChanged(); } }
+        //public bool bossDie = false;
 
         /// <summary>Параметры неба</summary>
         public SkySetting Setting { get; }
@@ -45,8 +48,6 @@ namespace InvasionModel
         /// <summary>Событие конец игры</summary>
         public event EndGameHandler EndGameEvent;
 
-        //public event ExplosionHandler ExplosionEvent;
-
         /// <summary>Вспомогательный метод для вызова события конец игры</summary>
         private void OnEndGame(EndGameEnum endGame)
         {
@@ -54,14 +55,9 @@ namespace InvasionModel
             EndGameEvent?.Invoke(this, endGame);
         }
 
-        //private void OnExplosion(double top, double left, double width, double height)
-        //{
-        //    ExplosionEvent?.Invoke(this, top, left, width, height);
-        //}
-
         /// <summary>Ширина неба</summary>
         public double Width { get; }
-        /// <summary>Ширина неба</summary>
+        /// <summary>Высота неба</summary>
         public double Heidht { get; }
         /// <summary>Пропорции неба</summary>
         public double Ratio { get; }
@@ -71,9 +67,6 @@ namespace InvasionModel
 
         /// <summary>Объект игрока</summary>
         public GamerClass Gamer { get; }
-
-        /// <summary>Объект босса</summary>
-        public EnemyBossClass Boss { get; }
 
         /// <summary>Частота появления противников в секyндах</summary>
         public double Frequency { get; private set; }
@@ -86,11 +79,9 @@ namespace InvasionModel
         /// <summary>все объекты в небе</summary>
         public ObservableCollection<UFOClass> UFOitems { get; } = new ObservableCollection<UFOClass>();
 
-        /*private readonly*/
         public DispatcherTimer timer = new DispatcherTimer();
+        /// <summary>Время последнего кадра</summary>
         private DateTime timeOld;
-
-        //public View.BattleWind bat;
 
         public Sky(SkySetting setting)
         {
@@ -112,7 +103,6 @@ namespace InvasionModel
                 FullHealth = Setting.GamerHealth
             };
             UFOitems.Add(Gamer);
-            //UFOitems.Add(new ExplosionClass() { Width = Width, Height = Heidht });
 
             timer.Interval = TimeSpan.FromMilliseconds(10);
             timer.Tick += Timer_Tick;
@@ -123,19 +113,11 @@ namespace InvasionModel
             ShareRockets = Setting.EnemyShareRockets;
 
             oldEnemy = timeOld;
-            //oldProjecileEnemy = timeOld;
-
-            //timer.Start();
         }
 
-        /// <summary>время создания предыдyщего врага</summary>
+        /// <summary>Время создания предыдyщего врага</summary>
         private DateTime oldEnemy;
 
-        //private DateTime spawnBooss;
-
-        /// <summary>время создания предыдyщего cнаряда</summary>
-        //private DateTime oldProjecileEnemy;
-        private int _frags = 0;
         private static readonly Random random = new Random();
 
         public void Timer_Tick(object sender, EventArgs e)
@@ -149,55 +131,67 @@ namespace InvasionModel
             DateTime timeNew = DateTime.Now;
             TimeSpan intervalFrame = timeNew - timeOld;
             timeOld = timeNew;
-            FrameMetodk(intervalFrame.TotalMilliseconds * 0.001);
+            FrameMetod(intervalFrame.TotalMilliseconds * 0.001);
             if (IsEndGame)
                 return;
             timer.Start();
         }
 
-        private void FrameMetodk(double intervalSec)
+        /// <summary>Метод создания модели кадра</summary>
+        /// <param name="intervalSec">Время прошедшее с прошлого кадра</param>
+        private void FrameMetod(double intervalSec)
         {
-            //if (!IsEndGame)
-            //{
             MoveUFO(intervalSec);
             ProjectiliesEnemies();
             HittingGamer();
             HittingEnemies();
             CreateEnemies();
-            ExplosionRemove();
-            //if ((Frags >= 10) && (haveBoss == false))
-            //{
-            //    CreateBoss();
-            //}
-            //}
+            RemoveDead();
+        }
+
+        /// <summary>Удаление погибших</summary>
+        private void RemoveDead()
+        {
+            foreach (UFOClass ufo in UFOitems.Where(uf => uf.Health < 0).ToArray())
+                UFOitems.Remove(ufo);
         }
 
         /// <summary>Расчёт попаданий по игроку</summary>
         public void HittingGamer()
         {
+            /// Список типов кто может нанести удар по игроку
             Type[] typeHitting = { typeof(EnemyClass), typeof(BulletEnemyClass), typeof(RocketEnemyClass) };
+
+            /// Массив элементов из UFOitems наносящих удар по игроку
             UFOClass[] hittUFO = UFOitems
                 .Where(it => typeHitting.Contains(it.GetType()))
                 .Where(it => Gamer.Intersection(it))
                 .ToArray();
 
+            /// Цикл по масиву
             foreach (UFOClass hUFO in hittUFO)
             {
+
+                /// Столкновение с противником
                 if (hUFO is HeliopterClass enemy)
                 {
                     UFOitems.Remove(enemy);
                     Gamer.Health -= 5;
                 }
+                /// Столкновение с ракетой
                 else if (hUFO is RocketEnemyClass rocket)
                 {
                     UFOitems.Remove(rocket);
                     Gamer.Health -= 3;
                 }
+                /// Столкновение со снарядом
                 else if (hUFO is BulletEnemyClass bullet)
                 {
                     UFOitems.Remove(bullet);
                     Gamer.Health -= 1;
                 }
+
+                /// Проверка оставшейся жизни игрока
                 if (Gamer.Health <= 0)
                 {
                     timer.Stop();
@@ -213,75 +207,66 @@ namespace InvasionModel
         /// <summary>Расчёт попаданий по противнику</summary>
         public void HittingEnemies()
         {
+
+            /// Массив из UFOitems выстрелов игрока
             UFOClass[] hittUFO = UFOitems
                 .OfType<ProjectileGamerClass>()
                 .ToArray();
+
+            /// Массив из UFOitems противников игрока
             UFOClass[] enemies = UFOitems
                 .OfType<EnemyClass>()
                 .ToArray();
 
+            /// Цикл по всем противникам
             foreach (EnemyClass enemy in enemies)
             {
+                /// Цикл по всем выстрелам попавшим в данного противника
                 foreach (UFOClass hUFO in hittUFO.Where(it => it.Intersection(enemy)))
                 {
+                    /// Попадание ракетой
                     if (hUFO is RocketGamerClass rocket)
                     {
                         UFOitems.Remove(rocket);
                         enemy.Health -= 3;
                     }
+                    /// Попадание снарядом
                     else if (hUFO is BulletGamerClass bullet)
                     {
                         UFOitems.Remove(bullet);
                         enemy.Health -= 1;
                     }
+                    /// Проверка оставшейся у противника жизни 
                     if (enemy.Health <= 0)
                     {
+                        /// Декремент количества убитых
                         Frags++;
+                        /// Вызов звукового события
                         OnSound(SoundEnum.enemyDie);
-                        //OnExplosion(enemy.Top, enemy.Left, enemy.Width, enemy.Heidht);
+
+                        /// Если противник был БОССом
                         if (enemy is EnemyBossClass)
                         {
                             Score += 200;
-                            //bossDie = true;
-
-                            //UFOitems.Remove(enemy);
-                            //timer.Stop();
                             OnEndGame(EndGameEnum.Win);
                         }
                         else
                         {
                             Score += 20;
-
-                            //UFOitems.Remove(enemy);
                         }
+
+                        /// Удаление убитого противника
                         UFOitems.Remove(enemy);
-                        //if (enemy is EnemyBossClass)
-                        //    OnEndGame(EndGameEnum.Win);
-                        //else
-                        //{
+
+                        /// Создание взрыва на месте убитого противника
                         ExplosionClass explosion = enemy.Copy<ExplosionClass>();
                         explosion.SpeedHorizontal = 0;
                         explosion.SpeedVertical = 0;
-
                         UFOitems.Add(explosion);
-                        //}
-                        //if (bossDie == true)
-                        //    OnEndGame(EndGameEnum.Win);
-                        //else if((bossDie==false)&&(int.Parse((DateTime.Now-spawnBooss).Seconds.ToString())==41))
-                        //    OnEndGame(EndGameEnum.Losing);
 
                         return;
                     }
                 }
-            }
-        }
-
-        /// <summary>Удаление взорвавшихся взрывов</summary>
-        private void ExplosionRemove()
-        {
-            foreach (ExplosionClass explosion in UFOitems.OfType<ExplosionClass>().Where(item => item.IsRemove).ToArray())
-            {
-                UFOitems.Remove(explosion);
             }
         }
 
@@ -370,6 +355,7 @@ namespace InvasionModel
             }
         }
 
+        /// <summary>Создание БОССа</summary>
         private void CreateBoss()
         {
             EnemyBossClass boss = new EnemyBossClass()
@@ -385,8 +371,6 @@ namespace InvasionModel
                 FullHealth = Setting.EnemyBossHealth
             };
             UFOitems.Add(boss);
-            //haveBoss = true;
-            //spawnBooss = DateTime.Now;
         }
 
         /// <summary>Метод  перемещения всех НЛО объектов</summary>
@@ -495,6 +479,7 @@ namespace InvasionModel
             UFOitems.Add(rocketgmr);
         }
 
+        /// <summary>Остановка игры на паузу</summary>
         public void Pause()
         {
             if (timer.IsEnabled)
@@ -505,9 +490,12 @@ namespace InvasionModel
             }
         }
 
-        private TimeSpan timeOldDelta, oldEnemyDelte;
-        private int score;
+        /// <summary>Время прошедшее с последнего кадра</summary>
+        private TimeSpan timeOldDelta;
+        /// <summary>Время прошедшее с создания последнего противника</summary>
+        private TimeSpan oldEnemyDelte;
 
+        /// <summary>Продолжение игры после паузы</summary>
         public void Continue()
         {
             if (!timer.IsEnabled)
@@ -519,73 +507,5 @@ namespace InvasionModel
             }
         }
 
-        //public void AnimationTimer_Tick(object sender, EventArgs e)
-        //{
-        //    currentFrame = currentFrame + 1;
-        //    var frameLeft = currentFrame * frameW;
-        //    var frameTop = animationIndex * frameH;
-        //    (heli.Fill as ImageBrush).Viewbox = new Rect(frameLeft, frameTop, frameLeft + frameW, frameTop + frameH);
-
-        //    if (currentFrame == animations[animationIndex] - 5) //-1 номер кадра с которого начинается.
-        //    {
-        //        animationIndex++;
-        //        if (animationIndex == animations.Length) animationIndex = 0;
-        //        frameCount = animations[animationIndex];
-        //        currentFrame = 0;
-        //    }
-        //}
-
-        //public void DramBang(EnemyClass enemy, Grid scene)
-        //{
-        //    Rectangle myrect = new Rectangle();
-        //    ImageBrush ib = new ImageBrush();
-        //    ib.AlignmentX = AlignmentX.Left;
-        //    ib.AlignmentY = AlignmentY.Top;
-        //    ib.Stretch = Stretch.None;
-        //    ib.ViewboxUnits = BrushMappingMode.Absolute;
-        //    ImageBrush ib1 = new ImageBrush();
-        //    ib.Viewbox = new Rect(0, 0, 300, 381);
-        //    //ib.Viewbox = new Rect(enemy.Top, enemy.Left, enemy.Width, enemy.Heidht);
-        //    ib.ViewboxUnits = BrushMappingMode.Absolute;
-        //    heli.Fill = ib;
-        //    heli.Height = frameH;
-        //    heli.Width = frameW;
-
-        //    //ib.ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/Resources/vz.png", UriKind.Absolute));
-        //    ib.ImageSource = new BitmapImage(new Uri("C:/Users/Admin/Desktop/Invasion of Gooks_фреймы/Invasion of Gooks/Resources/vz.png", UriKind.Absolute));
-
-        //    heli.Fill = ib;
-        //    heli.Height = enemy.Heidht;
-        //    heli.Width = enemy.Width;
-        //    myrect.Fill = ib;
-        //    myrect.StrokeThickness = 0;
-        //    myrect.Stroke = Brushes.Black;
-        //    myrect.Height = enemy.Heidht;
-        //    myrect.Width = enemy.Width;
-        //    //myrect.RenderTransform = new TranslateTransform(0, 0); 
-        //    scene.Children.Add(heli);
-
-        //    ImageBrush fight_background = new ImageBrush
-        //    {
-        //        ImageSource = new BitmapImage(new Uri(@"pack://application:,,,/in/vz.png", UriKind.Absolute))
-        //    };
-        //    myrect.Fill = fight_background;
-
-        //    frameCount = animations[animationIndex];
-
-        //    //timer.Tick += new EventHandler(AnimationTimer_Tick);
-        //    //timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
-        //    //timer.Start();
-        //    animation.Start();
-        //}
-
-        //public void ScoreBase(int score)
-        //{
-        //    string sql = "INSERT INTO kyrsach (Name, Score) VALUES (" + "'" + name + "' ," + score + ")";
-        //    SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-
-        //    var dt = new DataBase1 { name = name, scr = int.Parse(reader["Score"].ToString()) };
-        //    data.Items.Add(dt);
-        //}
     }
 }

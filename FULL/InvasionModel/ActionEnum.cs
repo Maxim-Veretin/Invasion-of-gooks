@@ -21,9 +21,9 @@
         DownRight,
         /// <summary>ВнизВлево</summary>
         DownLeft,
-        /// <summary>Выстрел Паф</summary>
-        Pif,
         /// <summary>Выстрел Пиф</summary>
+        Pif,
+        /// <summary>Выстрел Паф</summary>
         Paf,
         /// <summary>Полить напалмом</summary>
         Napalm

@@ -3,17 +3,11 @@
 
     public class ModelClass
     {
+        /// <summary>Небо игры с объектами</summary>
         public Sky WarSky { get; private set; }
 
-        //public ModelClass(/*Grid scene*/)
-        //{
-        //}
-
-        ////public bool SaveResult(DataGamer gamer)
-        ////{
-        ////    return true;
-        ////}
-
+        /// <summary>Задание следующего действия в игре</summary>
+        /// <param name="direcion">Значение действия</param>
         public void SetAction(ActionEnum direcion)
         {
             switch (direcion)
@@ -72,18 +66,21 @@
                     break;
             }
         }
-
+        /// <summary>Пауза в игре</summary>
         public void GamePause()
         {
             if (WarSky != null)
                 WarSky.Pause();
         }
+        /// <summary>Продолжение после паузы в игре</summary>
         public void GameContinue()
         {
             if (WarSky != null)
                 WarSky.Continue();
         }
+        /// <summary>Выход из игры</summary>
         public void GameBreak() { WarSky = null; }
+        /// <summary>Старт новой игры</summary>
         public void GameStart()
         {
             WarSky = new Sky

@@ -12,6 +12,7 @@
       xmlns:model="clr-namespace:InvasionModel;assembly=InvasionModel"
       xmlns:viewModel ="clr-namespace:InvasionViewModel;assembly=InvasionViewModel"
       xmlns:wpfLib="clr-namespace:WpfCommControlLibrary;assembly=WpfCommControlLibrary"
+      xmlns:main="clr-namespace:Invasion_of_Gooks"
       d:DesignHeight="450" d:DesignWidth="800"
       d:DataContext="{x:Type viewModel:ViewModelBattleClass}">
 
@@ -36,6 +37,7 @@
         </x:Array>-->
         <viewModel:ViewModelStatic x:Key="ViewModelStatic"/>
         <commlibrary:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <main:ExplosionAnimationFramesActionConverter x:Key="ExplosionAnimationFramesActionConverter"/>
     </Grid.Resources>
     <Grid.InputBindings>
         <KeyBinding Key="Space" Command="{Binding KeyCommand}" CommandParameter="Space"/>
@@ -138,7 +140,8 @@
                     <DataTemplate DataType="{x:Type model:ExplosionClass}">
                         <wpfLib:AnimationFrames Width="{Binding Width}" Height="{Binding Height}"
                                 Interval="50"  SourceFrames="{StaticResource Explosion.ImageFrames}"
-                                Action="Start"  VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                Action="Start"  VerticalAlignment="Top" HorizontalAlignment="Left"
+                                                ActionCallback="{Binding Converter={StaticResource ExplosionAnimationFramesActionConverter}, Mode=OneWay}"/>
                     </DataTemplate>
                 </ItemsControl.Resources>
                 <ItemsControl.ItemsPanel>
